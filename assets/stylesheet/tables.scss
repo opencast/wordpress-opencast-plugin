@@ -1,0 +1,49 @@
+.oc-admin-wrapper {
+    table.opencast-option-table {
+        td >  div.input {
+            span {
+                &.input-desc {
+                    display: block;
+                    margin-top: 10px;
+                    font-size: 12px;
+                    font-style: italic;
+                }
+                &.input-default{
+                    display: inline-block;
+                    margin-left: 10px;
+                    font-size: 12px;
+                    color: grey;
+                }
+                
+            }
+        }
+    }
+}
+div.oc-table-container {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    table {
+        border: 1px solid #dee2e6;
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+        background-color: transparent;
+        tr {
+            th, td {
+                padding: .75rem;
+                vertical-align: baseline;
+                border-top: 1px solid #dee2e6;
+                border-right: 1px solid #dee2e6;
+                input, select {
+                    max-width: 100px;
+                }
+            }
+            th {
+                text-transform: uppercase;
+                border-bottom: 2px solid #dee2e6;
+            }
+        }
+    }
+}

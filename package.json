@@ -1,0 +1,41 @@
+{
+  "name": "opencast",
+  "version": "1.0.0",
+  "description": "Opencast Video Solution for automated video capture, management, and distribution at scale in wordpress.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "webpack": "webpack",
+    "prod": "webpack --config webpack.prod.js --mode=production --display errors-only",
+    "dev": "webpack --config webpack.dev.js --mode=development",
+    "watch": "webpack --config webpack.dev.js --mode=development --watch --info-verbosity none",
+    "prezip": "npm run prod",
+    "zip": "zip -r opencast.zip lib src vendor views images index.php opencast.php readme.md uninstall.php"
+  },
+  "keywords": [],
+  "author": "ELAN e.V. (zamani@elan-ev.de)",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^3.5.3",
+    "file-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.14.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "resolve-url-loader": "^3.1.1",
+    "sass-loader": "^8.0.2",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.0.8"
+  },
+  "dependencies": {
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "babel-loader": "^8.1.0",
+    "paginationjs": "^2.1.5",
+    "select2": "^4.0.13"
+  }
+}

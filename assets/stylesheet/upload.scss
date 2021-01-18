@@ -1,0 +1,51 @@
+div.oc-upload-box {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border: 2px solid #363636;
+    border-radius: 5px;
+    position: relative;
+    span.oc-upload-caption {
+        position: absolute;
+        top: -15px;
+    }
+    form {
+        input{
+            width: 100%;
+            margin: 5px 0;
+            padding: 15px;
+            &.upload-btn {
+                background-color: #363636;
+                border-radius: 10px;
+                color: #fff;
+            }
+            &.has-error {
+                border: 2px solid red;
+            }
+            border: 1px solid rgba(0,0,0,0.3);
+        }
+        div.dropzone {
+            margin: 5px 0;
+            border: 2px dashed rgba(0,0,0,0.3);
+            &.has-error {
+                border: 2px dashed red;
+            }
+            .dz-progress{
+                display: none;
+            }
+        }
+        .disabled {
+            background: rgba(0,0,0, 0.2) !important;
+            cursor: default !important;
+        }
+        div.oc-progress {
+            display: none;
+            margin: 10px;
+            text-align: center;
+            white-space: nowrap;
+            img.loader-image {
+                vertical-align: middle;
+            }
+        }
+    }
+}

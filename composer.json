@@ -1,0 +1,21 @@
+{
+    "name": "elanev/opencast",
+    "description": "Opencast Video Solution for automated video capture, management, and distribution at scale in wordpress.",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Farbod Zamani Boroujeni",
+            "email": "zamani@elan-ev.de"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Model\\": "./models",
+            "Opencast\\": "./lib"
+        }
+    }
+}

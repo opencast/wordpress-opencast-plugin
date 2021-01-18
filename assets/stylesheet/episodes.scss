@@ -1,0 +1,220 @@
+div.opencast-episodes-container {
+    a.episode {
+        display: block;
+        text-decoration: none;
+        color: black;
+        background-color: #eee;
+        padding: 5px;
+        margin: 15px;
+        div {
+            vertical-align:middle;
+            display: inline-block;
+            padding: 20px;
+            &.preview {
+                width: 200px;
+                img {
+                    max-width: 160px !important;
+                    max-height: 116px !important;
+                }
+            }
+            &.desc {
+                h2 {
+                    margin: 0;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        &:hover{
+            background-color: #fafafa;
+        }
+    }
+}
+
+div.opencast-episodes-pagination {
+    text-align:center !important;
+    width:100%;
+    div {
+        display: inline-block !important;
+        div{
+            ul {
+                margin: 0;
+                padding: 0;
+        
+                li {
+                    float: left;
+                    border: 1px solid #aaa;
+                    border-right: none;
+                    list-style: none;
+                    padding: 2px 10px;
+                    &:first-child {
+                        border-radius: 3px 0 0 3px;
+                    }
+                    &:last-child {
+                        border-right: 1px solid #aaa;
+                        border-radius: 0 3px 3px 0;
+                    }
+                    a {
+                        text-decoration: none;
+                        color: #000000;
+                    }
+                    &.active {
+                        color: #555;
+                        background-color: #aaa;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.oc-selectable-list {
+    position: relative;
+    * {
+        box-sizing: border-box;
+    }
+    background-color: rgba(0,0,0, 0.75);
+    max-width: 480px;
+    &.oc-searchable-list {
+        margin: 45px 20px 0px 20px;
+        div.oc-list-direction {
+            display: flex !important;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            align-items: center;
+            justify-content: center;
+            width: 4%;
+            text-align: center;
+            opacity: .9;
+            z-index: 3;
+            a {
+                background-color: rgba(0,0,0, 0.75);
+                border-radius: 50%;
+                padding: 7px 5px 10px 5px;
+                line-height: 0;
+                color: #fff;
+                font-size: 18px;
+                text-decoration: none;
+                &:hover{
+                    color: red;
+                }
+            }
+            &.oc-prev{
+                left: -20px;
+            }
+            &.oc-next{
+                right: -20px;
+            }
+        }
+        div.search{
+            display: flex !important;
+            flex-direction: row;
+            background-color: #fff;
+            position: absolute;
+            top: -45px;
+            width: 50%;
+            input.oc-list-search-text {
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                margin-bottom: 10px;
+                padding: 5px;
+                width: 100%;
+            }
+            button.oc-list-search-btn {
+                &:focus {
+                    outline: 0;
+                    span.dashicons {
+                        outline: 0;
+                    }
+                }
+                &:hover {
+                    background-color: #aaa;
+                }
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 5px;
+                padding: 5px;
+                margin-bottom: 10px;
+                cursor: pointer;
+                margin-left: 2px;
+                span.dashicons {
+                    margin-top: 4px;
+                }
+            }
+        }
+    }
+    div.offset{
+        display: none;
+        &.active {
+            display: block;
+        }
+        div.row {
+            &:after{
+                content: '';
+                display: table;
+                clear: both;
+            }
+            div.episode {
+                transition: all .2s ease-in-out;
+                float: left;
+                width: 50%;
+                padding: 10px;
+                position: relative;
+                &:hover {
+                    transform: scale(1.1);
+                    z-index:3;
+                }
+                .background {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 1;
+                }
+                .overlay {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;  
+                    background: rgba(0, 0, 0, 0.5);
+                    z-index: 2;
+                }
+                .content {
+                    position: relative;
+                    z-index: 3;
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    cursor: pointer;
+                    p, small {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    p {
+                        font-size: 14px;
+                    }
+                    small {
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+    }
+}
+div.oc-player-container {
+    iframe.oc-player {
+        width: 95%;
+        height: 455px;
+    }
+}
+div.oc-admin-se-list {
+    p {
+        &.limit-box {
+            float: left;
+            margin: 0;
+        }
+    }
+    
+}
