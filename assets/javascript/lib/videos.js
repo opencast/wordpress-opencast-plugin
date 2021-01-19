@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     if ($('.oc-admin-video-list').is(':visible')) {
         let video_list_main_container = $('.oc-admin-video-list');
         let ajax_url = video_list_main_container.data('ajaxurl');
@@ -6,7 +6,7 @@ $(document).ready(function() {
         //limit
         var limit_box = video_list_main_container.find('p.limit-box');
         var limit_btn = limit_box.find('input#limit-submit');
-        limit_btn.click(function(e){
+        limit_btn.on('click', function(e) {
             e.preventDefault();
             var limit_value = $(this).prev().val();
             if (limit_value) {
@@ -35,7 +35,7 @@ $(document).ready(function() {
         var search_box = video_list_main_container.find('p.search-box');
         
         var search_btn = search_box.find('input#search-submit');
-        search_btn.click(function(e){
+        search_btn.on('click', function(e) {
             e.preventDefault();
             var search_value = encodeURIComponent($(this).prev().val().trim());
             if (search_value) {
@@ -56,7 +56,7 @@ $(document).ready(function() {
             }
         });
         var search_clear_btn = search_box.find('a#search-clear');
-        search_clear_btn.click(function(e){
+        search_clear_btn.on('click', function(e) {
             e.preventDefault();
             var input_element = $(this).parent().find('input[type="text"]');
             if (input_element) {
@@ -75,7 +75,7 @@ $(document).ready(function() {
         
         //Actions
         /* DELETE SINGLE */
-        $('a.oc-admin-video-delete').click(function(e) {
+        $('a.oc-admin-video-delete').on('click', function(e) {
             e.preventDefault();
             var video_id = $(this).data('id');
             if (video_id !== undefined) {
@@ -83,7 +83,7 @@ $(document).ready(function() {
             }
         });
         /* BULK action */
-        $('input#doaction2, input#doaction').click(function(e) {
+        $('input#doaction2, input#doaction').on('click', function(e) {
             var action = $(this).prev().val();
             if (action == 'delete') {
                 var to_be_deleted = new Array();

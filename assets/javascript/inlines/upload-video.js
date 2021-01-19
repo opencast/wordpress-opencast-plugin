@@ -1,7 +1,7 @@
 window.$j = window.jquery = window.$ = jQuery.noConflict();
 Dropzone.autoDiscover = false;
 window.OcUploadConnected = false;
-$(document).ready(function() {
+$(function() {
     $('div.oc-upload-box > form#ingestForm').each(function () {
         var action = $(this).attr('action');
         
@@ -25,7 +25,7 @@ $(document).ready(function() {
         });
 
         var submitBtn = $(this).find('input[type="submit"]');
-        submitBtn.click(function(e){
+        submitBtn.on('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             if (!OcUploadConnected) {
@@ -108,11 +108,11 @@ $(document).ready(function() {
 function clearUploadProccess(title_input, creator_input, that, dropzone_div, text, color) {
     title_input.val('');
     title_input.removeClass('disabled has-error');
-    title_input.blur();
+    title_input.trigger('blur');
     title_input.prop('disabled', false);
     creator_input.val('');
     creator_input.removeClass('disabled has-error');
-    creator_input.blur();
+    creator_input.trigger('blur');
     creator_input.prop('disabled', false);
     that.prop('disabled', false);
     that.removeClass('disabled');
@@ -124,7 +124,7 @@ function clearUploadProccess(title_input, creator_input, that, dropzone_div, tex
 }
 function submitUploadLtiForm(lti_form, elm) {
     if (lti_form) {
-        lti_form.submit(function(e) {
+        lti_form.on('submit', function(e) {
             e.preventDefault();
             var ocurl = decodeURIComponent($(this).attr("action"));
             $.ajax({
@@ -139,7 +139,7 @@ function submitUploadLtiForm(lti_form, elm) {
                 }
             });
         });
-        lti_form.submit();
+        lti_form.trigger('submit');
     }
 }
 

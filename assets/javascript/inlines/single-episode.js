@@ -2,15 +2,15 @@ window.$j = window.jquery = window.$ = jQuery.noConflict();
 if (typeof window.OcConnected === 'undefined') {
     window.OcConnected = false;
 }
-$(document).ready(function() {
-    $('div.episode.oc-select-redirect').click(function(e) {
+$(function() {
+    $('div.episode.oc-select-redirect').on('click', function(e) {
         e.preventDefault();
         var selectlink = $(this).data('selectlink');
         if (selectlink) {
             window.location.href = selectlink;
         }
     });
-    $(".oc-list-direction a").click(function(e) {
+    $(".oc-list-direction a").on('click', function(e) {
         e.preventDefault();
         var offsets = $('.oc-searchable-list div.offset');
         var active_index = offsets.filter('.active').data('index');
@@ -23,7 +23,7 @@ $(document).ready(function() {
         }
         $('.oc-searchable-list div.offset').filter(`[data-index='${tobeshown}']`).addClass('active');
     });
-    $("button.oc-list-search-btn").click(function(e){
+    $("button.oc-list-search-btn").on('click', function(e) {
         e.preventDefault();
         var text = $("input.oc-list-search-text").val();
         if (text != '' && text.length > 2) {
@@ -31,7 +31,7 @@ $(document).ready(function() {
         }
     });
     window.default_episodes = $(".offset").find(".episode");
-    $("input.oc-list-search-text").keyup(function(e){
+    $("input.oc-list-search-text").on('keyup', function(e) {
         e.preventDefault();
         var text = $(this).val().toLocaleLowerCase().trim();
 
@@ -98,7 +98,7 @@ $(document).ready(function() {
                 iframe.attr('src', iframe.data('playersrc'));
             } else {
 
-                lti_form.submit(function(e) {
+                lti_form.on('submit', function(e) {
                     e.preventDefault();
                     var ocurl = decodeURIComponent($(this).attr("action"));
                     $.ajax({
@@ -113,7 +113,7 @@ $(document).ready(function() {
                         }
                     });
                 });
-                lti_form.submit();
+                lti_form.trigger('submit');
             }
         }
     });

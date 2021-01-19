@@ -2,13 +2,16 @@ window.$j = window.jquery = window.$ = jQuery.noConflict();
 if (typeof window.OcConnected === 'undefined') {
     window.OcConnected = false;
 }
-$(document).ready(function() {
+$(function() {
     $('.opencast-episodes-container').each(function(){
         var contents = $(this).find('a.episode');
+        if (!contents.length) {
+            return;
+        }
         //Pagination
         var totalNumber = $(this).data('total');
         var pageSize = $(this).data('limit');
-        if (contents.length && pageSize && pageSize < totalNumber) {
+        if (pageSize && pageSize < totalNumber) {
             contents.remove();
             $(this).pagination({
                 dataSource: contents.toArray(),
@@ -31,12 +34,21 @@ $(document).ready(function() {
                     main_div.prepend(data);
                 }
             });
+        } else { // no pagination
+            $(contents).each((index, episode)=> {
+                $(episode).on('click', function(event){
+                    var playersrc = $(this).data('playersrc');
+                    if (playersrc) {
+                        firePlayer(event, playersrc);
+                    }
+                })
+            });
         }
     });
 });
 function submitLtiForm(lti_form) {
     if (lti_form) {
-        lti_form.submit(function(e) {
+        lti_form.on('submit', function(e) {
             e.preventDefault();
             var ocurl = decodeURIComponent($(this).attr("action"));
             $.ajax({
@@ -50,7 +62,7 @@ function submitLtiForm(lti_form) {
                 }
             });
         });
-        lti_form.submit();
+        lti_form.trigger('submit');
     }
 }
 function firePlayer(e, playersrc) {
@@ -60,7 +72,7 @@ function firePlayer(e, playersrc) {
     if (clicked.nodeName != 'A') {
         target = $(target).parent();
     }
-    $(target).blur();
+    $(target).trigger('blur');
     if (!OcConnected) {
         var lti_form = $(target).parent().find('form#OCLtiLaunchForm');
         submitLtiForm(lti_form);

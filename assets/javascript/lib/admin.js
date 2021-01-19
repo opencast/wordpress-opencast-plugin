@@ -1,5 +1,5 @@
 window.urlParams = new URLSearchParams(window.location.search);
-$(document).ready(function() {
+$(function() {
     //Select 2
     $('.oc-select2').each(function(){
         $(this).select2({
@@ -28,7 +28,7 @@ $(document).ready(function() {
                 $(this).addClass('active');
             }
         }
-        $(this).click(function(e){
+        $(this).on('click', function(e) {
             e.preventDefault();
             $('.oc-admin-wrapper ul.nav-tabs li.active').removeClass('active');
             $('.oc-admin-wrapper .tab-pane.active').removeClass('active');
@@ -45,7 +45,7 @@ $(document).ready(function() {
     //Trigger Disbaled
     $('input.trigger-disabled-parent').each(function() {
         hanldetriggerdisabled(this);
-        $(this).click(function(e) {
+        $(this).on('click', function(e) {
             hanldetriggerdisabled(this);
         });
         function hanldetriggerdisabled(elm) {
@@ -62,7 +62,7 @@ $(document).ready(function() {
     $('div.oc-admin-se-list').find('input#_wpnonce').remove();
     $('div.oc-admin-se-list').find('input[name="_wp_http_referer"]').remove();
     //Edit
-    $('a.oc-admin-se-edit').click(function(e) {
+    $('a.oc-admin-se-edit').on('click', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
         var se_table = $(this).parents('table.singleepisodes');
@@ -139,7 +139,7 @@ $(document).ready(function() {
                             swal_table.append(tr);
                             swal_table.find('.swal-checkbox').each(function(i, input){
                                 hanldetriggerdisabled(input);
-                                $(input).click(function(e) {
+                                $(input).on('click', function(e) {
                                     hanldetriggerdisabled($(this));
                                 });
                                 function hanldetriggerdisabled(elm) {
@@ -211,7 +211,7 @@ $(document).ready(function() {
         }
     });
     //Delete
-    $('a.oc-admin-se-delete').click(function(e) {
+    $('a.oc-admin-se-delete').on('click', function(e) {
         e.preventDefault();
         var id = $(this).data('id');
         if (id) {
@@ -225,7 +225,7 @@ $(document).ready(function() {
             $(e).addClass('oc-admin-se-bulkaction');
         });
         $(elm).find('input[type="submit"]').each(function(i, e){
-            $(e).click(function(e) {
+            $(e).on('click', function(e) {
                 e.preventDefault();
                 e.stopPropagation()
                 var action = $(this).prev().val();
