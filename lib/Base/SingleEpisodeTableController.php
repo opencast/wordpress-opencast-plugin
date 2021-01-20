@@ -133,7 +133,7 @@ class SingleEpisodeTableController
 
     private function get_actions() {
         $actions = array(
-            'edit' => "<a href='#' class='oc-admin-se-edit' data-id='%s'><span class='dashicons dashicons-edit-large'></span></a>",
+            'edit' => "<a href='#' class='oc-admin-se-edit' data-id='%s'><span class='dashicons dashicons-edit'></span></a>",
             'delete' => "<a href='#' class='oc-admin-se-delete' data-id='%s'><span class='dashicons dashicons-trash'></span></a>"
         );
         return $actions;
