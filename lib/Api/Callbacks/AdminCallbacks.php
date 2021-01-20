@@ -93,20 +93,20 @@ class AdminCallbacks
         if ($value) {
             $checked = 'checked';
         }
-        $class = (isset($args['class'])) ? $args['class'] : '';
-        $description = (isset($args['description'])) ? $args['description'] : '';
-        $default = (isset($args['default'])) ? $args['default'] : '';
-        $required = (isset($args['required'])) ? " required='{$args['required']}' " : '';
-        $placeholder = (isset($args['placeholder'])) ? __(esc_html( $args['placeholder'] )) : '';
-        $id = (isset($args['label_for']) && !empty($args['label_for'])) ? " id='{$args['label_for']}' " : '';
+        $class = esc_attr((isset($args['class'])) ? $args['class'] : '');
+        $description = esc_html((isset($args['description'])) ? $args['description'] : '');
+        $default = esc_html((isset($args['default'])) ? $args['default'] : '');
+        $required = (isset($args['required'])) ? " required='" . esc_attr($args['required']) . "' " : '';
+        $placeholder = (isset($args['placeholder'])) ? __(esc_attr( $args['placeholder'] )) : '';
+        $id = (isset($args['label_for']) && !empty($args['label_for'])) ? " id='" . esc_attr($args['label_for']) . "' " : '';
         $data_attr = '';
         if (isset($args['data']) && is_array($args['data'])) {
             foreach ($args['data'] as $key => $value) {
-                $data_attr .= " data-{$key}='{$value}' ";
+                $data_attr .= " data-" . esc_attr($key) . "='" . esc_attr($value) . "' ";
             }
         }
         
-        $input      = "<input $id type='checkbox' $data_attr class='regular-checkbox $class' name='{$args['option_name']}[{$args['label_for']}]' $checked placeholder='$placeholder' $required>";
+        $input      = "<input $id type='checkbox' $data_attr class='regular-checkbox $class' name='" . esc_attr($args['option_name'] . "[" . $args['label_for'] . "]") . "' $checked placeholder='$placeholder' $required>";
         $input_default = $default ? "<span class='input-default'>Default: $default</span>" : '';
         $input_desc = $description  ? "<span class='input-desc'>$description</span>" : '';
 
@@ -117,15 +117,15 @@ class AdminCallbacks
     {
         $option = get_option($args['option_name']);
         $value = (isset($option[$args['label_for']])) ? esc_attr($option[$args['label_for']]) : '';
-        $class = (isset($args['class'])) ? $args['class'] : '';
-        $type = (isset($args['type'])) ? $args['type'] : 'text';
-        $description = (isset($args['description'])) ? $args['description'] : '';
-        $default = (isset($args['default'])) ? $args['default'] : '';
-        $required = (isset($args['required'])) ? " required='{$args['required']}' " : '';
-        $placeholder = (isset($args['placeholder'])) ? __(esc_html( $args['placeholder'] )) : '';
-        $id = (isset($args['label_for']) && !empty($args['id'])) ? " id='{$args['label_for']}' " : '';
+        $class = esc_attr((isset($args['class'])) ? $args['class'] : '');
+        $type = esc_attr((isset($args['type'])) ? $args['type'] : 'text');
+        $description = esc_html((isset($args['description'])) ? $args['description'] : '');
+        $default = esc_html((isset($args['default'])) ? $args['default'] : '');
+        $required = (isset($args['required'])) ? " required='" . esc_attr($args['required']) . "' " : '';
+        $placeholder = (isset($args['placeholder'])) ? __(esc_attr( $args['placeholder'] )) : '';
+        $id = (isset($args['label_for']) && !empty($args['id'])) ? " id='" . esc_attr($args['label_for']) . "' " : '';
 
-        $input      = "<input type='$type' $id class='regular-text $class' name='{$args['option_name']}[{$args['label_for']}]' value='$value' placeholder='$placeholder' $required>";
+        $input      = "<input type='$type' $id class='regular-text $class' name='" . esc_attr($args['option_name'] . "[" . $args['label_for'] . "]") . "' value='$value' placeholder='$placeholder' $required>";
         $input_default = $default ? "<span class='input-default'>Default: $default</span>" : '';
         $input_desc = $description  ? "<span class='input-desc'>$description</span>" : '';
 
@@ -139,16 +139,16 @@ class AdminCallbacks
         if (!is_array($values)) {
             $values = array($values);
         }
-        $class = (isset($args['class'])) ? $args['class'] : '';
-        $description = (isset($args['description'])) ? __(esc_html( $args['description'] )) : '';
-        $default = (isset($args['default'])) ? __(esc_html( $args['default'] )) : '';
-        $required = (isset($args['required'])) ? " required='{$args['required']}' " : '';
-        $placeholder = (isset($args['placeholder'])) ? __(esc_html( $args['placeholder'] )) : '';
-        $id = (isset($args['label_for']) && !empty($args['label_for'])) ? " id='{$args['label_for']}' " : '';
+        $class = esc_attr((isset($args['class'])) ? $args['class'] : '');
+        $description = esc_html((isset($args['description'])) ? __( $args['description'] ) : '');
+        $default =  esc_html((isset($args['default'])) ? __(esc_html( $args['default'] )) : '');
+        $required = (isset($args['required'])) ? " required='" . esc_attr($args['required']) . "' " : '';
+        $placeholder = (isset($args['placeholder'])) ? __(esc_attr( $args['placeholder'] )) : '';
+        $id = (isset($args['label_for']) && !empty($args['label_for'])) ? " id='" . esc_attr($args['label_for']) . "' " : '';
         $options = (isset($args['options'])) ? $args['options'] : array();
         $multi = (isset($args['multi']) && $args['multi'] == true) ? "multiple='multiple' data-maxsize=" . count($options) : '';
 
-        $input = "<select style='width: 60%' $id $multi class='oc-select2 $class' name='{$args['option_name']}[{$args['label_for']}]" .($multi ? '[]' : '') . "' placeholder='$placeholder' $required>";
+        $input = "<select style='width: 60%' $id $multi class='oc-select2 $class' name='" . esc_attr($args['option_name'] . "[" . $args['label_for'] . "]") .($multi ? '[]' : '') . "' placeholder='$placeholder' $required>";
         if (!$multi) {
             $input .= "<option></option>";
         }
@@ -189,7 +189,8 @@ class AdminCallbacks
         switch ($type) {
             case 'dropdown':
                 foreach ($roles->role_names as $role_key => $role_name) {
-                    $wp_roles[$role_key] = "<option value='$role_key' %s>" . __($role_name) . "</option>";
+                    $role_key = esc_attr($role_key);
+                    $wp_roles[$role_key] = "<option value='$role_key' %s>" . esc_html(__($role_name)) . "</option>";
                 }
                 break;
             
@@ -212,7 +213,8 @@ class AdminCallbacks
         if ($as_options) {
             $result_options = array();
             foreach ($existing_workflows as $workflow_id => $workflow_title) {
-                $result_options[$workflow_id] = "<option value='$workflow_id' %s>" . __($workflow_title) . "</option>";
+                $workflow_id = esc_attr($workflow_id);
+                $result_options[$workflow_id] = "<option value='$workflow_id' %s>" . esc_html(__($workflow_title)) . "</option>";
             }
             return $result_options;
         }

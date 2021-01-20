@@ -74,7 +74,7 @@ function firePlayer(e, playersrc) {
     }
     $(target).trigger('blur');
     if (!OcConnected) {
-        var lti_form = $(target).parent().find('form#OCLtiLaunchForm');
+        var lti_form = $(target).parent().find('form[name="OCLtiLaunchForm"]');
         submitLtiForm(lti_form);
     }
     Swal.fire({

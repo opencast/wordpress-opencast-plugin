@@ -8,7 +8,7 @@ namespace Opencast\Shortcodes;
 use Opencast\Api\OCRestAPI;
 use Opencast\Api\LTIConsumer;
 
-class Episodes
+class Episodes extends ShortcodeController
 {
      /**
      * Class registeration.
@@ -26,16 +26,18 @@ class Episodes
         $opencast_options = get_option(OPENCAST_OPTIONS);
         if (is_array($episodes = $this->get_episodes($opencast_options))) {
             $attributes = array(
-                'id' => (isset($attr['id']) && !empty($attr['id'])) ? esc_html($attr['id']) : 'oc-episodes',
-                'name' => (isset($attr['name']) && !empty($attr['name'])) ? esc_html($attr['name']) : 'oc-episodes',
-                'class' => (isset($attr['class']) && !empty($attr['class'])) ? esc_html($attr['class']) : 'opencast-episodes-container'
+                'id' => sanitize_text_field((isset($attr['id']) && !empty($attr['id'])) ? $attr['id'] : 'oc-episodes'),
+                'name' => sanitize_text_field((isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : 'oc-episodes'),
+                'class' => sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ? $attr['class'] : 'opencast-episodes-container')
             );
             if (isset($episodes['list']) && $episodes['list']) {
                 $rendered_episodes = '';
                 $limit = $episodes['limit'];
                 $total = $episodes['total'];
                 if ($limit && $limit < $total) {
-                    $rendered_episodes .= $this->generate_default_style_pagination();
+                    $pagination_css = $this->generate_default_style_pagination();
+                    $pagination_style_name = 'oc-pagination-style';
+                    $this->oc_add_inline_style($pagination_style_name, $pagination_css);
                 }
 
                 wp_enqueue_script( 'paginationjs', PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
@@ -103,7 +105,9 @@ class Episodes
     private function render_episodes($attributes, $episodes, $opencast_options){
         $episodes_container = '';
         if (isset($attributes['class']) && strpos($attributes['class'], 'opencast-episodes-container') !== FALSE) {
-            $episodes_container = $this->generate_default_style_episodes();
+            $default_css = $this->generate_default_style_episodes();
+            $default_style_name = 'oc-episodes-style';
+            $this->oc_add_inline_style($default_style_name, $default_css);
         }
 
         $total = $episodes['total'];
@@ -113,11 +117,11 @@ class Episodes
         
         $episodes_container .= "<div data-total='$total' data-limit='$limit' id='{$attributes['id']}' name='{$attributes['name']}' class='{$attributes['class']}'>";       
         foreach ($episodes_list as $episode) {
-            $player_src = rtrim($endpoint, '/') . '/paella/ui/embed.html?id=' . $episode['id'];
-            $preview_src = $this->get_preview_src($episode['mediapackage']);
-            $title = $this->get_title($episode['mediapackage']);
-            $creator = $this->get_creator($episode['mediapackage']);
-            $date_time = $this->get_date_time($episode['mediapackage']);
+            $player_src = esc_attr(rtrim($endpoint, '/') . '/paella/ui/embed.html?id=' . $episode['id']);
+            $preview_src = esc_attr($this->get_preview_src($episode['mediapackage']));
+            $title = esc_html($this->get_title($episode['mediapackage']));
+            $creator = esc_html($this->get_creator($episode['mediapackage']));
+            $date_time = esc_html($this->get_date_time($episode['mediapackage']));
             $episodes_container .=   "<a data-playersrc='$player_src' class='episode' href='#'>"
                             ."<div class='preview'>"
                                 ."<img alt='Preview' src='$preview_src'>"
@@ -200,16 +204,12 @@ class Episodes
     }
 
     private function generate_default_style_episodes() {
-        return "<style>".
-                    "div.opencast-episodes-container a.episode{display:block;text-decoration:none;color:#000;background-color:#eee;padding:5px;margin:15px}div.opencast-episodes-container a.episode div{vertical-align:middle;display:inline-block;padding:20px}div.opencast-episodes-container a.episode div.preview{width:200px}div.opencast-episodes-container a.episode div.preview img{max-width:160px!important;}div.opencast-episodes-container a.episode div.desc h2{margin:0 0 5px}div.opencast-episodes-container a.episode:hover{background-color:#fafafa}".
-                    file_get_contents(PLUGIN_DIR . 'src/vendors/sweetalert2/sweetalert2.css').
-                "</style>";
+        return "div.opencast-episodes-container a.episode{display:block;text-decoration:none;color:#000;background-color:#eee;padding:5px;margin:15px}div.opencast-episodes-container a.episode div{vertical-align:middle;display:inline-block;padding:20px}div.opencast-episodes-container a.episode div.preview{width:200px}div.opencast-episodes-container a.episode div.preview img{max-width:160px!important;}div.opencast-episodes-container a.episode div.desc h2{margin:0 0 5px}div.opencast-episodes-container a.episode:hover{background-color:#fafafa}".
+                file_get_contents(PLUGIN_DIR . 'src/vendors/sweetalert2/sweetalert2.css');
     }
 
     private function generate_default_style_pagination() {
-        return "<style>".
-                    file_get_contents(PLUGIN_DIR . 'src/vendors/pagination/pagination.css').
-                "</style>";
+        return file_get_contents(PLUGIN_DIR . 'src/vendors/pagination/pagination.css');
     }
 }
 

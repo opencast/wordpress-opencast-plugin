@@ -29,7 +29,7 @@ $(function() {
             e.preventDefault();
             e.stopPropagation();
             if (!OcUploadConnected) {
-                var lti_form = $(this).parent().siblings('form#OCLtiLaunchForm');
+                var lti_form = $(this).parent().siblings('form[name="OCLtiLaunchForm"]');
                 submitUploadLtiForm(lti_form, $(this));
                 return false;
             }

@@ -7,7 +7,7 @@ namespace Opencast\Shortcodes;
 
 use Opencast\Api\LTIConsumer;
 
-class Studio
+class Studio extends ShortcodeController
 {
      /**
      * Class registeration.
@@ -40,14 +40,18 @@ class Studio
         }
         
         $studio = '';
-        $title = (isset($attr['title']) && !empty($attr['title'])) ? __(esc_html( $attr['title'] )) : '';
-        $class = (isset($attr['class']) && !empty($attr['class'])) ?  __(esc_html( $attr['class'] )) : '';
+        $title = sanitize_text_field((isset($attr['title']) && !empty($attr['title'])) ? __($attr['title']) : '');
+        $class = sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ?  __($attr['class']) : '');
         if (!isset($_GET['redirect_to_studio'])) {
             $studio_style = '';
             if (!$class) {
-                $studio_style = "style='background-image: url(" . plugins_url('/src/images/studio_small.svg', dirname(__FILE__, 2)) .");{$this->generate_default_style()}'";
+                $studio_css = $this->generate_default_style();
+                $studio_style_name = 'oc-studio-btn-style';
+                $this->oc_add_inline_style($studio_style_name, $studio_css);
+                $studio_style = "style='background-image: url(" . plugins_url('/src/images/studio_small.svg', dirname(__FILE__, 2)) .");'";
+                $class = 'oc-studio-btn';
             }
-            $studio .= "<a target='_blank' $studio_style href='?redirect_to_studio=1' class='$class'>{$title}</a>";
+            $studio .= "<a target='_blank' $studio_style class='" . esc_attr($class) . "' href='?redirect_to_studio=1' class='" . esc_attr($class) . "'>" . esc_html($title) . "</a>";
             return $studio;
         }
         //Query settings
@@ -70,7 +74,7 @@ class Studio
     }
 
     private function generate_default_style() {
-        return "background-repeat:no-repeat;background-color:#363636;background-position-x:10px;background-position-y:center;background-attachment:scroll;background-size:70px;background-origin: padding-box;background-clip: border-box;padding:16px 16px 16px 80px;border-radius:10px;text-decoration:none;color:#fff;";
+        return ".oc-studio-btn{background-repeat:no-repeat;background-color:#363636;background-position-x:10px;background-position-y:center;background-attachment:scroll;background-size:70px;background-origin: padding-box;background-clip: border-box;padding:16px 16px 16px 80px;border-radius:10px;text-decoration:none;color:#fff;}";
     }
 }
 

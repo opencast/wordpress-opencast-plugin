@@ -132,9 +132,9 @@ class VideoListTable extends \WP_List_Table
             $oc_search = filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING);
         }
         $searchbox = '<p class="search-box">';
-        $searchbox .= "<label class='screen-reader-text' for='$id-search-input'>" . __($name) . "</label>";
-        $searchbox .= "<input id='$id-search-input' type='text' name='oc-table-search' value='$oc_search' />";
-        $searchbox .= "<input id='search-submit' class='button' type='submit' name='s' value='" . __('Search') . "' />";
+        $searchbox .= "<label class='screen-reader-text' for='" . esc_attr($id) ."-search-input'>" . esc_html(__($name)) . "</label>";
+        $searchbox .= "<input id='" . esc_attr($id) ."-search-input' type='text' name='oc-table-search' value='" . esc_attr($oc_search) . "' />";
+        $searchbox .= "<input id='search-submit' class='button' type='submit' name='s' value='" . esc_html(__('Search')) . "' />";
         if ($oc_search) {
             $searchbox .= "<a id='search-clear' style='text-decoration:none;color:red;cursor:pointer;'><span style='margin-top:5px;' class='dashicons dashicons-no-alt'></span></a>";
         }
@@ -144,9 +144,9 @@ class VideoListTable extends \WP_List_Table
 
     function limit_box() {
         $limitbox = '<p class="search-box limit-box" style="float:left!important;">';
-        $limitbox .= "<label class='screen-reader-text' for=''>" . __('Limit Per Page') . "</label>";
-        $limitbox .= "<input type='number' name='oc-table-limit' value='{$this->data_video_per_page}' />";
-        $limitbox .= "<input id='limit-submit' class='button' type='submit' value='" . __('Apply Limit') . "' />";
+        $limitbox .= "<label class='screen-reader-text' for=''>" . esc_html(__('Limit Per Page')) . "</label>";
+        $limitbox .= "<input type='number' name='oc-table-limit' value='" . esc_attr($this->data_video_per_page) ."' />";
+        $limitbox .= "<input id='limit-submit' class='button' type='submit' value='" . esc_attr(__('Apply Limit')) . "' />";
         $limitbox .= '</p>';
         return $limitbox;
     }

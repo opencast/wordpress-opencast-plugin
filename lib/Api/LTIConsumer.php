@@ -110,21 +110,21 @@ class LTIConsumer
      * @return string
      */
     public static function render_lti_form($endpoint, $params, $auto_submit) {
-        $id = "OCLtiLaunchForm" . ($auto_submit ? 'Auto' : '') ;
+        $name = esc_attr("OCLtiLaunchForm" . ($auto_submit ? 'Auto' : '')) ;
+        $identifier = ($auto_submit ? "id='$name'" : "name='$name'");
         $content = '';
-        $content .= $auto_submit ? '<script>'.
-                        'window.addEventListener("load", function() {document.getElementById("'. $id .'").submit();})'
+        $content .= $auto_submit ?  '<script>'.
+                        'window.addEventListener("load", function() {document.getElementById("'. esc_js($name) .'").submit();})'
                     .'</script>' : '';
-        $content .= "<form action='$endpoint' name='$id' id='$id' " .
+        $content .= "<form action='$endpoint' $identifier " .
                         "method='post' encType='application/x-www-form-urlencoded'>\n";
 
         // Construct html form for the launch parameters.
         foreach ($params as $key => $value) {
-            $key = htmlspecialchars($key);
-            $value = htmlspecialchars($value);
+            $key = esc_attr(htmlspecialchars($key));
+            $value = esc_attr(htmlspecialchars($value));
             $content .= "<input type='hidden' name='$key' value='$value' >";
         }
-        // $content .= "<input type='submit' value='GO TO STUDIO'>";
         $content .= "</form>\n";
 
         return $content;

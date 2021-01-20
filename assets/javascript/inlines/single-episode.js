@@ -91,7 +91,7 @@ $(function() {
     });
 
     $("div.oc-player-container").each(function() {
-        var lti_form = $(this).find('form#OCLtiLaunchForm');
+        var lti_form = $(this).find('form[name="OCLtiLaunchForm"]');
         var iframe = $(this).find('iframe.oc-player');
         if (lti_form) {
             if (OcConnected) {
