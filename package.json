@@ -12,7 +12,7 @@
     "dev": "webpack --config webpack.dev.js --mode=development",
     "watch": "webpack --config webpack.dev.js --mode=development --watch --info-verbosity none",
     "prezip": "npm run prod",
-    "zip": "zip -r opencast.zip lib src vendor views images index.php opencast.php readme.md uninstall.php"
+    "zip": "zip -r opencast.zip lib src vendor views images index.php opencast.php opencast-constants.php readme.md uninstall.php"
   },
   "keywords": [],
   "author": "ELAN e.V. (zamani@elan-ev.de)",

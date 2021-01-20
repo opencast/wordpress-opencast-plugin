@@ -12,8 +12,8 @@ class Activate {
     {
         // flush rewrite rules
         flush_rewrite_rules();
-        if ( get_option(OPENCAST_OPTIONS) ) {
-            // update_option( OPENCAST_OPTIONS, []); // keep previous data
+        if ( !get_option(OPENCAST_OPTIONS) ) {
+            update_option( OPENCAST_OPTIONS, []); // create new data
         }
     }
 }

@@ -43,18 +43,14 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     die('Unable to find autolaod!');
 }
 
-//defining Constants
-define('PLUGIN_NAME', 'opencast_plugin');
-define('PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('PLUGIN_DIR_URL', plugin_dir_url(__FILE__));
-define('PLUGIN_VERSION', '1.0.0');
-define('OPENCAST_OPTIONS', PLUGIN_NAME . '_options');
-define('OPENCAST_VIDEOS_MANAGER', PLUGIN_NAME . '_manager');
+//Make use of constants
+if (file_exists(__DIR__ . '/opencast-constants.php')) {
+    require_once __DIR__ . '/opencast-constants.php';
+} else {
+    die('Unable to find Constants!');
+}
 
-// var_dump(plugins_url('/src/images/studio_small.svg', __FILE__));
 //Handle activation / deactivation procedures
-
 use Opencast\Base\Activate;
 use Opencast\Base\Deactivate;
 
