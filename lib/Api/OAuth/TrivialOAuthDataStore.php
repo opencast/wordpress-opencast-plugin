@@ -11,7 +11,6 @@ use Opencast\Api\OAuth\OAuthToken;
 /**
  * A Trivial memory-based store - no support for tokens.
  * 
- * Pulled from Moodle code base
  */
 class TrivialOAuthDataStore extends OAuthDataStore {
 

@@ -219,7 +219,7 @@ class Admin
                         'class' => '',
                         'placeholder' => 'Connection timeout in seconds',
                         'type' => 'number',
-                        'description' => __('Setup the time in seconds while moodle is trying to connect to opencast until timeout'),
+                        'description' => __('The time period within which a server call (API call) should take place!'),
                         'default' => '1 Second'
                     ]
                 ],
