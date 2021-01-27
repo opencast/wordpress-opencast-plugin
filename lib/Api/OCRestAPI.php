@@ -26,39 +26,39 @@ class OCRestAPI {
     }
 
     public function oc_get($service_url) {
-        $options[CURLOPT_HTTPGET] = 1;
-        return $this->remote_request($service_url, $options);
+        $args['method'] = 'GET';
+        return $this->remote_request($service_url, $args);
     }
 
     public function oc_post($service_url, $form_fields) {
-        $options[CURLOPT_POST] = 1;
+        $args['method'] = 'POST';
         if (!empty($form_fields)) {
-            $options[CURLOPT_POSTFIELDS] = $form_fields;
+            $args['body'] = $form_fields;
         }
-        return $this->remote_request($service_url, $options, 'multipart/form-data');
+        return $this->remote_request($service_url, $args, 'multipart/form-data');
     }
 
     public function oc_put($service_url, $form_fields) {
         
-        $options[CURLOPT_CUSTOMREQUEST] = 'PUT';
+        $args['method'] = 'PUT';
         if (!empty($form_fields)) {
-            $options[CURLOPT_POSTFIELDS] = $form_fields;
+            $args['body'] = $form_fields;
         }
-        return $this->remote_request($service_url, $options, 'multipart/form-data');
+        return $this->remote_request($service_url, $args, 'multipart/form-data');
     }
 
     public function oc_delete($service_url, $data = array()) {
-        $options[CURLOPT_CUSTOMREQUEST] = 'DELETE';
-        return $this->remote_request($service_url, $options);
+        $args['method'] = 'DELETE';
+        return $this->remote_request($service_url, $args);
     }
 
-    private function remote_request($service_url, $options = array(), $content_type = ''/* 'application/json' */) {
+    private function remote_request($service_url, $args = array(), $content_type = '') {
 
-        if (!function_exists('curl_init')) {
+        if (!function_exists('wp_remote_request')) {
             return false;
         }
 
-        if (!$this->validate_params($service_url, $options)) {
+        if (!$this->validate_params($service_url, $args)) {
             return false;
         }
 
@@ -69,60 +69,45 @@ class OCRestAPI {
             $url = rtrim($service_url[0], '/') . '/'. ltrim($service_url[1], '/');
         }
         
-        $ch = $this->initCurl($content_type);
+        $args = $this->prepareArgs($args, $content_type);
 
-        $options[CURLOPT_URL] = $url;
-        $options[CURLOPT_FRESH_CONNECT] = 1;
-        curl_setopt_array($ch , $options);
+        $res = wp_remote_request($url, $args);
 
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        if ($httpCode >= 400) {
+        if (is_wp_error($res)) {
             return false;
-        } 
+        }
 
-        if ($httpCode == 204 && $options[CURLOPT_CUSTOMREQUEST] == 'DELETE') {
+        if ($res['response']['code'] == 204 && $args['method'] == 'DELETE') {
             return true;
         }
 
-        $responseResult = json_decode( $response, true );
-        if ( is_array( $responseResult ) && ! is_wp_error( $responseResult ) ) {
-            return $responseResult;
-        } else {
-            return false;
-        }
+        $body_array = json_decode( wp_remote_retrieve_body($res), true );
 
-        return true;
+        //Check for success
+        if( is_array( $body_array ) && ($res['response']['code'] == 200 || $res['response']['code'] == 201) ) {
+            return $body_array;
+        }
+        
+        return false;
     }
 
-    private function validate_params($service_url, $options) {
+    private function validate_params($service_url, $args) {
         return (!empty($service_url) && !empty($this->apiurl) && 
                 !empty($this->apiusername) &&  !empty($this->apipassword) &&
-                (isset($options[CURLOPT_POST]) || isset($options[CURLOPT_HTTPGET]) || isset($options[CURLOPT_CUSTOMREQUEST])));
+                (isset($args['method']) && (in_array($args['method'], array('GET', 'POST', 'PUT', 'DELETE')))));
     }
 
-    private function initCurl($content_type)
+    private function prepareArgs($args, $content_type)
     {
-        // setting up a curl-handler
-        $ch = curl_init();
         $header = array();
         $basicauth = base64_encode("{$this->apiusername}:{$this->apipassword}");
-        $header[] = "Authorization: Basic $basicauth";
-        $header[] = "X-Requested-Auth: Digest";
-        (!$content_type) ?: $header[] = "Content-Type: $content_type";
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt( $ch, CURLOPT_HTTPHEADER, $header );
-        curl_setopt($ch, CURLOPT_ENCODING, 'UTF-8');
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->apitimeout);
+        $header['Authorization'] = "Basic $basicauth";
+        $header['X-Requested-Auth'] = "Digest";
+        (!$content_type) ?: $header['Content-Type'] = "$content_type";
+        $args['headers'] = $header;
+        $args['timeout'] = $this->apitimeout;
+        $args['sslverify'] = false;
 
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-
-        //ssl
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, TRUE);
-        // curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, TRUE);
-
-        return $ch;
+        return $args;
     }
 }
