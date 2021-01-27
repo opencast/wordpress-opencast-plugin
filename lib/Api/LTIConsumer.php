@@ -35,7 +35,7 @@ class LTIConsumer
             'lis_person_name_family' => $current_user->user_lastname,
             'lis_person_name_full' => $current_user->user_firstname . ' ' . $current_user->user_lastname,
             'ext_user_username' => ($current_user->user_login) ? $current_user->user_login : 'wordpress',
-            'lis_person_contact_email_primary' => ($current_user->user_email) ? ($current_user->user_email) : 'wordpress@wordpress.org',
+            'lis_person_contact_email_primary' => ($current_user->user_email) ? ($current_user->user_email) : 'cloud@opencast.com',
             'lis_person_sourcedid' => ($current_user->user_login) ? $current_user->user_login : 'wordpress',
 
             //lti setting
