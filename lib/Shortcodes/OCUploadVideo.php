@@ -111,6 +111,10 @@ class OCUploadVideo extends OCShortcodeController
         return OCLTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, false);
     }
 
+    ## INFO:
+    /*
+     * constant OPENCAST_PLUGIN_DIR is using the proper file location with (__FILE__) please refer to ../../opencast-constants.php
+     */
     private function generate_default_style() {
         return file_get_contents(OPENCAST_PLUGIN_DIR . 'src/vendors/dropzone/dist/min/dropzone.min.css').
                 file_get_contents(OPENCAST_PLUGIN_DIR . 'src/css/inlines/upload-video.css');

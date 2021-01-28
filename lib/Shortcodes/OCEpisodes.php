@@ -203,6 +203,10 @@ class OCEpisodes extends OCShortcodeController
         return $date_time;
     }
 
+    ## INFO:
+    /*
+     * constant OPENCAST_PLUGIN_DIR is using the proper file location with (__FILE__) please refer to ../../opencast-constants.php
+     */
     private function generate_default_style_episodes() {
         return "div.opencast-episodes-container a.episode{display:block;text-decoration:none;color:#000;background-color:#eee;padding:5px;margin:15px}div.opencast-episodes-container a.episode div{vertical-align:middle;display:inline-block;padding:20px}div.opencast-episodes-container a.episode div.preview{width:200px}div.opencast-episodes-container a.episode div.preview img{max-width:160px!important;}div.opencast-episodes-container a.episode div.desc h2{margin:0 0 5px}div.opencast-episodes-container a.episode:hover{background-color:#fafafa}".
                 file_get_contents(OPENCAST_PLUGIN_DIR . 'src/vendors/sweetalert2/sweetalert2.css');

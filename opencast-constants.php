@@ -4,6 +4,10 @@
  */
 
 //defining Constants
+
+## INFO:
+//regarding to correction ## Calling file locations poorly
+// __FILE__ has been used to define constant OPENCAST_PLUGIN_DIR - later on it will be used throughout the plugin! 
 $original_file_path = str_replace('-constants' , '', __FILE__);
 if (file_exists($original_file_path)) {
     define('OPENCAST_PLUGIN_NAME', 'opencast_plugin');

@@ -292,6 +292,10 @@ class OCSingleEpisode extends OCShortcodeController
         return $date_time;
     }
 
+    ## INFO:
+    /*
+     * constant OPENCAST_PLUGIN_DIR is using the proper file location with (__FILE__) please refer to ../../opencast-constants.php
+     */
     private function generate_default_style() {
         return file_get_contents(OPENCAST_PLUGIN_DIR . 'src/css/inlines/single-episode.css');
     }
