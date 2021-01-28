@@ -5,7 +5,7 @@
 
 namespace Opencast\Base;
 
-class Deactivate {
+class OCDeactivate {
     /**
 	 * Attached to deactivate_{ plugin_basename( __FILES__ ) } by register_deactivation_hook()
 	 */

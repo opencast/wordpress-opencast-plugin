@@ -5,10 +5,10 @@
 
 namespace Opencast\Base;
 use Opencast\Api\OCRestAPI;
-use Opencast\Api\VideoListTable;
+use Opencast\Api\OCVideoListTable;
 
 
-class VideoManagerController
+class OCVideoManagerController
 {
     public function register()
     {
@@ -19,10 +19,10 @@ class VideoManagerController
         }
     }
 
-    public function admin_video_manager_index() 
+    public function oc_admin_video_manager_index() 
     {
         $video_per_page = $this->prepare_video_per_page();
-        $video_list_table = new VideoListTable(
+        $video_list_table = new OCVideoListTable(
                                     $this->get_videos(),
                                     $this->set_columns(), 
                                     $this->set_hidden_columns(),

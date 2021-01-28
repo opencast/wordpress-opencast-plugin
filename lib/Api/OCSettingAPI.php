@@ -5,7 +5,7 @@
 
 namespace Opencast\Api;
 
-class SettingAPI
+class OCSettingAPI
 {
     public $admin_pages = array();
     public $admin_subpages = array();

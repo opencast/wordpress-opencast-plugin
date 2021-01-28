@@ -5,10 +5,10 @@
 
 namespace Opencast\Base;
 use Opencast\Api\OCRestAPI;
-use Opencast\Api\SingleEpisodeListTable;
+use Opencast\Api\OCSingleEpisodeListTable;
 
 
-class SingleEpisodeTableController
+class OCSingleEpisodeTableController
 {
     private $activetabpane = "opencast_single_episode_option_section";
     public function register()
@@ -22,7 +22,7 @@ class SingleEpisodeTableController
 
     public function generate_table($se_list, $wp_roles, $option_name) 
     {       
-        $se_list_table = new SingleEpisodeListTable(
+        $se_list_table = new OCSingleEpisodeListTable(
                                     $this->convert_list($se_list, $wp_roles, $option_name),
                                     $this->set_columns(), 
                                     $this->set_hidden_columns(),

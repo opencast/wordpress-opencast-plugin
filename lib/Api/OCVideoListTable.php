@@ -6,7 +6,7 @@
 namespace Opencast\Api;
 use \WP_List_Table;
 
-class VideoListTable extends \WP_List_Table
+class OCVideoListTable extends \WP_List_Table
 {
     private $videos = array();
     private $data_columns = array();

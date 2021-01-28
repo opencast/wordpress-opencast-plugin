@@ -6,9 +6,9 @@
 namespace Opencast\Shortcodes;
 
 use Opencast\Api\OCRestAPI;
-use Opencast\Api\LTIConsumer;
+use Opencast\Api\OCLTIConsumer;
 
-class Episodes extends ShortcodeController
+class OCEpisodes extends OCShortcodeController
 {
      /**
      * Class registeration.
@@ -40,9 +40,9 @@ class Episodes extends ShortcodeController
                     $this->oc_add_inline_style($pagination_style_name, $pagination_css);
                 }
 
-                wp_enqueue_script( 'paginationjs', PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
-                wp_enqueue_script( 'sweetalert2', PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
-                wp_enqueue_script( 'episodes.js', PLUGIN_DIR_URL . 'src/js/inlines/episodes.js', array('jquery', 'paginationjs', 'sweetalert2'), PLUGIN_VERSION );
+                wp_enqueue_script( 'paginationjs', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
+                wp_enqueue_script( 'sweetalert2', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
+                wp_enqueue_script( 'episodes.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/inlines/episodes.js', array('jquery', 'paginationjs', 'sweetalert2'), OPENCAST_PLUGIN_VERSION );
 
                 $rendered_episodes .= $this->render_episodes($attributes, $episodes, $opencast_options);
                 return $rendered_episodes;
@@ -150,7 +150,7 @@ class Episodes extends ShortcodeController
 
         $endpoint = rtrim($opencast_options['apiurl'], '/') . '/lti';
         $customtools = 'ltitools';
-        return LTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, false);
+        return OCLTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, false);
 
     }
 
@@ -205,11 +205,11 @@ class Episodes extends ShortcodeController
 
     private function generate_default_style_episodes() {
         return "div.opencast-episodes-container a.episode{display:block;text-decoration:none;color:#000;background-color:#eee;padding:5px;margin:15px}div.opencast-episodes-container a.episode div{vertical-align:middle;display:inline-block;padding:20px}div.opencast-episodes-container a.episode div.preview{width:200px}div.opencast-episodes-container a.episode div.preview img{max-width:160px!important;}div.opencast-episodes-container a.episode div.desc h2{margin:0 0 5px}div.opencast-episodes-container a.episode:hover{background-color:#fafafa}".
-                file_get_contents(PLUGIN_DIR . 'src/vendors/sweetalert2/sweetalert2.css');
+                file_get_contents(OPENCAST_PLUGIN_DIR . 'src/vendors/sweetalert2/sweetalert2.css');
     }
 
     private function generate_default_style_pagination() {
-        return file_get_contents(PLUGIN_DIR . 'src/vendors/pagination/pagination.css');
+        return file_get_contents(OPENCAST_PLUGIN_DIR . 'src/vendors/pagination/pagination.css');
     }
 }
 

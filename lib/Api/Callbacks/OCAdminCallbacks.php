@@ -6,34 +6,34 @@
 namespace Opencast\Api\Callbacks;
 use Opencast\Api\OCRestAPI;
 
-class AdminCallbacks
+class OCAdminCallbacks
 {
-    public function admin_index()
+    public function oc_admin_index()
     {
-        return require_once( PLUGIN_DIR . 'views/admin/admin_index.php' );
+        return require_once( OPENCAST_PLUGIN_DIR . 'views/admin/oc_admin_index.php' );
     }
     
-    public function api_option_section()
+    public function oc_api_option_section()
     {
         echo '<p>' . __('Opencast API connection') . '</p>';
     }
 
-    public function studio_option_section()
+    public function oc_studio_option_section()
     {
         echo '<p>' . __('Opencast studio integration') . '</p>';
     }
 
-    public function episode_option_section()
+    public function oc_episode_option_section()
     {
         echo '<p>' . __('Display Opencast Episodes') . '</p>';
     }
     
-    public function single_episode_option_section()
+    public function oc_single_episode_option_section()
     {
         echo '<p>' . __('Manage Single Episodes') . '</p>';
     }
 
-    public function video_option_section()
+    public function oc_video_option_section()
     {
         echo '<p>' . __('Below are the Upload Video settings for Opencast.') . '</p>';
     }
@@ -76,16 +76,16 @@ class AdminCallbacks
     }
 
 
-    public function get_callback($type)
+    public function oc_get_callback($type)
     {
         foreach (get_class_methods($this) as $method) {
-            if (strtolower($method) == "input{$type}field") {
+            if (strtolower($method) == "ocinput{$type}field") {
                 return $method;
             }       
         }
     }
 
-    public function inputCheckboxField($args)
+    public function ocInputCheckboxField($args)
     {
         $option = get_option($args['option_name']);
         $value = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : true;
@@ -113,7 +113,7 @@ class AdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function inputTextField($args)
+    public function ocInputTextField($args)
     {
         $option = get_option($args['option_name']);
         $value = (isset($option[$args['label_for']])) ? esc_attr($option[$args['label_for']]) : '';
@@ -132,7 +132,7 @@ class AdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function inputSelectField($args)
+    public function ocInputSelectField($args)
     {
         $option = get_option($args['option_name']);
         $values = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : '';
@@ -166,20 +166,20 @@ class AdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function inputSingleEpisodeTableField($args)
+    public function ocInputSingleEpisodeTableField($args)
     {
         $option = get_option($args['option_name']);
         $list = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : array();
         $controller = (isset($args['controller'])) ? $args['controller'] : null;
         $option_name = "{$args['option_name']}[{$args['label_for']}]";
         if ($controller) {
-            $controller->generate_table($list, $this->get_wp_roles(), $option_name);
+            $controller->generate_table($list, $this->oc_get_wp_roles(), $option_name);
         }
         // echo 'Empty';
     }
 
 
-    public function get_wp_roles($type = '') {
+    public function oc_get_wp_roles($type = '') {
         $roles = wp_roles();
         $wp_roles = array();
         if (!$roles) {
@@ -202,7 +202,7 @@ class AdminCallbacks
         return $wp_roles;
     }
 
-    public function get_existing_workflows($tag = '', $as_options = true) {
+    public function oc_get_existing_workflows($tag = '', $as_options = true) {
         $existing_workflows = array();
         $request = new OCRestAPI();
         if ($returnedresults = $request->oc_get("/api/workflow-definitions?filter=tag:$tag")) {

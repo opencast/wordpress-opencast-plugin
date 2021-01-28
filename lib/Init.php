@@ -14,16 +14,16 @@ final class Init
     public static function get_services()
     {
         return [
-            Pages\Admin::class,
-            Base\Enqueue::class,
-            Base\SettingLinks::class,
-            Shortcodes\Studio::class,
-            Shortcodes\Episodes::class,
-            Shortcodes\SingleEpisode::class,
-            Shortcodes\SinglePublicEpisode::class,
-            Shortcodes\UploadVideo::class,
-            Base\VideoManagerController::class,
-            Base\SingleEpisodeTableController::class,
+            Pages\OCAdmin::class,
+            Base\OCEnqueue::class,
+            Base\OCSettingLinks::class,
+            Shortcodes\OCStudio::class,
+            Shortcodes\OCEpisodes::class,
+            Shortcodes\OCSingleEpisode::class,
+            Shortcodes\OCSinglePublicEpisode::class,
+            Shortcodes\OCUploadVideo::class,
+            Base\OCVideoManagerController::class,
+            Base\OCSingleEpisodeTableController::class,
         ];
 
     }

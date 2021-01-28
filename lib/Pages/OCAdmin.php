@@ -5,20 +5,20 @@
 
 namespace Opencast\Pages;
 
-use Opencast\Api\SettingAPI;
-use Opencast\Api\Callbacks\AdminCallbacks;
-use Opencast\Base\VideoManagerController;
-use Opencast\Base\SingleEpisodeTableController;
+use Opencast\Api\OCSettingAPI;
+use Opencast\Api\Callbacks\OCAdminCallbacks;
+use Opencast\Base\OCVideoManagerController;
+use Opencast\Base\OCSingleEpisodeTableController;
 
-class Admin
+class OCAdmin
 {
     public $settings;
     public $callbacks;
 
     public function __construct()
     {
-        $this->settings = new SettingAPI();
-        $this->callbacks = new AdminCallbacks();
+        $this->settings = new OCSettingAPI();
+        $this->callbacks = new OCAdminCallbacks();
     }
 
     /**
@@ -48,7 +48,7 @@ class Admin
                 'menu_title' => 'Opencast',
                 'capability' => 'manage_options',
                 'menu_slug' => OPENCAST_OPTIONS,
-                'callback' => [$this->callbacks, 'admin_index'],
+                'callback' => [$this->callbacks, 'oc_admin_index'],
                 'icon_url' => 'dashicons-opencast',
                 'position' => 110,
             ]
@@ -68,7 +68,7 @@ class Admin
                 'menu_title' => __('Video Manager'),
                 'capability' => 'manage_options',
                 'menu_slug' => OPENCAST_VIDEOS_MANAGER,
-                'callback' => [new VideoManagerController(), 'admin_video_manager_index'],
+                'callback' => [new OCVideoManagerController(), 'oc_admin_video_manager_index'],
             ]
         ];
     }
@@ -99,31 +99,31 @@ class Admin
             [
                 'id' => 'opencast_api_option_section', 
                 'title' => __('API Settings'), 
-                'callback' => [$this->callbacks, 'api_option_section'], 
+                'callback' => [$this->callbacks, 'oc_api_option_section'], 
                 'page' => OPENCAST_OPTIONS,
             ],
             [
                 'id' => 'opencast_video_option_section', 
                 'title' => __('Upload Video Settings'), 
-                'callback' => [$this->callbacks, 'video_option_section'], 
+                'callback' => [$this->callbacks, 'oc_video_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_studio_option_section', 
                 'title' => __('Studio Settings'), 
-                'callback' => [$this->callbacks, 'studio_option_section'], 
+                'callback' => [$this->callbacks, 'oc_studio_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_episode_option_section', 
                 'title' => __('Episodes Settings'), 
-                'callback' => [$this->callbacks, 'episode_option_section'], 
+                'callback' => [$this->callbacks, 'oc_episode_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_single_episode_option_section', 
                 'title' => __('Single Episodes Settings'), 
-                'callback' => [$this->callbacks, 'single_episode_option_section'], 
+                'callback' => [$this->callbacks, 'oc_single_episode_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ]
         ];
@@ -143,7 +143,7 @@ class Admin
                     $field['page'] = OPENCAST_OPTIONS;
                     $field['args']['option_name'] = OPENCAST_OPTIONS;
                     $field['section'] = $section;
-                    $field['callback'] = [$this->callbacks, $this->callbacks->get_callback($field['type'])];
+                    $field['callback'] = [$this->callbacks, $this->callbacks->oc_get_callback($field['type'])];
                     unset($field['type']);
                     $new_fields[] = $field;
                 }
@@ -258,7 +258,7 @@ class Admin
                         'placeholder' => 'Instructors Roles',
                         'multi' => true,
                         'description' => __('User Roles that have Instructor Permissions'),
-                        'options' => $this->callbacks->get_wp_roles('dropdown'),
+                        'options' => $this->callbacks->oc_get_wp_roles('dropdown'),
                         'default' => 'administrator'
                     ]
                 ]
@@ -289,7 +289,7 @@ class Admin
                         'placeholder' => 'Access Permissions for Studio',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to Studio features'),
-                        'options' => $this->callbacks->get_wp_roles('dropdown')
+                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
                     ]
                 ],
             ],
@@ -358,7 +358,7 @@ class Admin
                         'placeholder' => 'Access Permissions for Episodes list',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to List of Videos'),
-                        'options' => $this->callbacks->get_wp_roles('dropdown')
+                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
                     ]
                 ],
             ],
@@ -388,7 +388,7 @@ class Admin
                         'placeholder' => 'Access Permissions for Episodes list',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to Upload Videos'),
-                        'options' => $this->callbacks->get_wp_roles('dropdown')
+                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
                     ]
                 ],
                 [
@@ -400,7 +400,7 @@ class Admin
                         'placeholder' => 'Workflow to start after upload',
                         'multi' => false,
                         'description' => __('Setup the unique shortname of the workflow, that should be started after succesfully uploading a video file to opencast. If left blank the standard workflow (ng-schedule-and-upload) will be used. Ask for additional workflows that may have been created by the opencast administrator.'),
-                        'options' => $this->callbacks->get_existing_workflows('upload', true),
+                        'options' => $this->callbacks->oc_get_existing_workflows('upload', true),
                         'default' => 'upload'
                     ]
                 ],
@@ -426,7 +426,7 @@ class Admin
                     'args' => [
                         'label_for' => 'singleepisodelist',
                         'class' => '',
-                        'controller' => new SingleEpisodeTableController(),
+                        'controller' => new OCSingleEpisodeTableController(),
                     ]
                 ],
             ]

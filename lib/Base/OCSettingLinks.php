@@ -5,14 +5,14 @@
 
 namespace Opencast\Base;
 
-class SettingLinks
+class OCSettingLinks
 {
     /**
      * Class registeration.
      */
     public function register()
     {
-        add_filter('plugin_action_links_' . PLUGIN_BASENAME , [$this, 'settings_link']);
+        add_filter('plugin_action_links_' . OPENCAST_PLUGIN_BASENAME , [$this, 'settings_link']);
     }
 
     /**

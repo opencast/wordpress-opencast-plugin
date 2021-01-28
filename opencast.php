@@ -48,15 +48,15 @@ if (file_exists(__DIR__ . '/opencast-constants.php')) {
 }
 
 //Handle activation / deactivation procedures
-use Opencast\Base\Activate;
-use Opencast\Base\Deactivate;
+use Opencast\Base\OCActivate;
+use Opencast\Base\OCDeactivate;
 
 /**
  * Attached to activate_{ plugin_basename( __FILES__ ) } by register_activation_hook()
  */
 function plugin_activate()
 {
-    Activate::activate();
+    OCActivate::activate();
 }
 
 /**
@@ -64,7 +64,7 @@ function plugin_activate()
  */
 function plugin_deactivate()
 {
-    Deactivate::deactivate();
+    OCDeactivate::deactivate();
 }
 
 register_activation_hook(__FILE__, 'plugin_activate');

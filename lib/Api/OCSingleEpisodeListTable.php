@@ -6,7 +6,7 @@
 namespace Opencast\Api;
 use \WP_List_Table;
 
-class SingleEpisodeListTable extends \WP_List_Table
+class OCSingleEpisodeListTable extends \WP_List_Table
 {
     private $single_episodes = array();
     private $data_columns = array();

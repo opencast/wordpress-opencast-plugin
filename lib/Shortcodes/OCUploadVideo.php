@@ -6,11 +6,11 @@
 namespace Opencast\Shortcodes;
 
 use Opencast\Api\OCRestAPI;
-use Opencast\Api\LTIConsumer;
+use Opencast\Api\OCLTIConsumer;
 
 define('POSTFILENAME', 'OCVideoToUpload');
 
-class UploadVideo extends ShortcodeController
+class OCUploadVideo extends OCShortcodeController
 {
      /**
      * Class registeration.
@@ -50,8 +50,8 @@ class UploadVideo extends ShortcodeController
         $success_text = sanitize_text_field((isset($attr['success_text']) && !empty($attr['success_text'])) ? $attr['success_text'] : __('Uploaded'));
         $fail_text = sanitize_text_field((isset($attr['fail_text']) && !empty($attr['fail_text'])) ? $attr['fail_text'] : __('Failed'));
         
-        wp_enqueue_script( 'dropzone', PLUGIN_DIR_URL . 'src/vendors/dropzone/dist/dropzone.js', array('jquery'), '5.7.0' );
-        wp_enqueue_script( 'upload-video.js', PLUGIN_DIR_URL . 'src/js/inlines/upload-video.js', array('jquery', 'dropzone'), PLUGIN_VERSION );
+        wp_enqueue_script( 'dropzone', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/dropzone/dist/dropzone.js', array('jquery'), '5.7.0' );
+        wp_enqueue_script( 'upload-video.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/inlines/upload-video.js', array('jquery', 'dropzone'), OPENCAST_PLUGIN_VERSION );
 
         $ingest_url = esc_attr(rtrim($opencast_options['apiurl'], '/') . '/ingest');
         $seriesid = esc_attr($opencast_options['seriesid']);
@@ -93,7 +93,7 @@ class UploadVideo extends ShortcodeController
     }
 
     private function generate_loading_progress() {
-        $loading_content = "<img class='loader-image' src='" .  esc_attr(PLUGIN_DIR_URL . '/src/images/loading.gif') . "'>" ;
+        $loading_content = "<img class='loader-image' src='" .  esc_attr(OPENCAST_PLUGIN_DIR_URL . '/src/images/loading.gif') . "'>" ;
         $loading_content .= "<span class='loader-text'>&nbsp" . esc_html(__('Please wait')) . "...&nbsp</span>";
         $loading_content .= "<span class='loader-progress'>0</span>%";
         return $loading_content;
@@ -108,17 +108,17 @@ class UploadVideo extends ShortcodeController
         }
         $endpoint = $opencast_options['apiurl'] . '/lti';
         $customtools = 'ltitools';
-        return LTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, false);
+        return OCLTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, false);
     }
 
     private function generate_default_style() {
-        return file_get_contents(PLUGIN_DIR . 'src/vendors/dropzone/dist/min/dropzone.min.css').
-                file_get_contents(PLUGIN_DIR . 'src/css/inlines/upload-video.css');
+        return file_get_contents(OPENCAST_PLUGIN_DIR . 'src/vendors/dropzone/dist/min/dropzone.min.css').
+                file_get_contents(OPENCAST_PLUGIN_DIR . 'src/css/inlines/upload-video.css');
     }
 
     private function create_acl_input() {
-        $lti_roles = LTIConsumer::get_lti_roles();
-        $acl_content = file_get_contents(PLUGIN_DIR . "lib/Shortcodes/acl.xml");
+        $lti_roles = OCLTIConsumer::get_lti_roles();
+        $acl_content = file_get_contents(OPENCAST_PLUGIN_DIR . "lib/Shortcodes/acl.xml");
 
         $acl_replaced = str_replace(array_keys($lti_roles), array_values($lti_roles), $acl_content);
         $acl_replaced = str_replace(["\r", "\n"], '', $acl_replaced);

@@ -5,9 +5,9 @@
 
 namespace Opencast\Shortcodes;
 
-use Opencast\Api\LTIConsumer;
+use Opencast\Api\OCLTIConsumer;
 
-class Studio extends ShortcodeController
+class OCStudio extends OCShortcodeController
 {
      /**
      * Class registeration.
@@ -68,7 +68,7 @@ class Studio extends ShortcodeController
         $consumersecret = $opencast_options['consumersecret'];
         $endpoint = rtrim($opencast_options['apiurl'], '/') . '/lti';
         $customtools = "studio/index.html?" . implode('&', $querys);
-        $studio = LTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, true, array('ROLE_STUDIO'));
+        $studio = OCLTIConsumer::lti_launch($endpoint, $consumerkey, $consumersecret, $customtools, true, array('ROLE_STUDIO'));
         
         return $studio;
     }

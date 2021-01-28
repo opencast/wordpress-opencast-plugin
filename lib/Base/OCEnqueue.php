@@ -5,7 +5,7 @@
 
 namespace Opencast\Base;
 
-class Enqueue
+class OCEnqueue
 {
     /**
      * Class registeration.
@@ -21,24 +21,24 @@ class Enqueue
     function assets_enqueue()
     {
         //css
-        wp_enqueue_style( 'select2_css', PLUGIN_DIR_URL . 'src/vendors/select2/dist/css/select2.min.css', array(), '4.0.13', 'all' );
-        wp_enqueue_style( 'pagination_css', PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.css', array(), '2.1.5', 'all' );
-        wp_enqueue_style( 'sweetalert2_css', PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.css', array(), '9.15.2', 'all' );
-        wp_register_style( 'opencast-base.css', PLUGIN_DIR_URL . 'src/css/opencast-base.css', array(), PLUGIN_VERSION );
+        wp_enqueue_style( 'select2_css', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/select2/dist/css/select2.min.css', array(), '4.0.13', 'all' );
+        wp_enqueue_style( 'pagination_css', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.css', array(), '2.1.5', 'all' );
+        wp_enqueue_style( 'sweetalert2_css', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.css', array(), '9.15.2', 'all' );
+        wp_register_style( 'opencast-base.css', OPENCAST_PLUGIN_DIR_URL . 'src/css/opencast-base.css', array(), OPENCAST_PLUGIN_VERSION );
         wp_enqueue_style( 'opencast-base.css');
 
         //javascripts
 
-        wp_register_script( 'select2_js', PLUGIN_DIR_URL . 'src/vendors/select2/dist/js/select2.min.js', array('jquery'), '4.0.13', true );
+        wp_register_script( 'select2_js', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/select2/dist/js/select2.min.js', array('jquery'), '4.0.13', true );
         wp_enqueue_script('select2_js');
 
-        wp_register_script( 'pagination_js', PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
+        wp_register_script( 'pagination_js', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
         wp_enqueue_script('pagination_js');
 
-        wp_register_script( 'sweetalert2_js', PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
+        wp_register_script( 'sweetalert2_js', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
         wp_enqueue_script('sweetalert2_js');
 
-        wp_register_script( 'opencast-base.js', PLUGIN_DIR_URL . 'src/js/opencast-base.js', array('jquery', 'select2_js', 'pagination_js', 'sweetalert2_js'), PLUGIN_VERSION );
+        wp_register_script( 'opencast-base.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/opencast-base.js', array('jquery', 'select2_js', 'pagination_js', 'sweetalert2_js'), OPENCAST_PLUGIN_VERSION );
         wp_enqueue_script( 'opencast-base.js');
         wp_localize_script( 'opencast-base.js', 'delete_confirm_data',
             array( 

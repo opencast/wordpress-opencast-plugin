@@ -5,7 +5,7 @@
 
 namespace Opencast\Shortcodes;
 
-class SinglePublicEpisode extends ShortcodeController
+class OCSinglePublicEpisode extends OCShortcodeController
 {
 
      /**

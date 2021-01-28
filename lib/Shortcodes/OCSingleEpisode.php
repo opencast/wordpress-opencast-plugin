@@ -6,9 +6,9 @@
 namespace Opencast\Shortcodes;
 
 use Opencast\Api\OCRestAPI;
-use Opencast\Api\LTIConsumer;
+use Opencast\Api\OCLTIConsumer;
 
-class SingleEpisode extends ShortcodeController
+class OCSingleEpisode extends OCShortcodeController
 {
     private $oc_id;
     private $wp_id;
@@ -127,7 +127,7 @@ class SingleEpisode extends ShortcodeController
 
         $class = array('oc-selectable-list');
         wp_enqueue_style( 'dashicons' );
-        wp_enqueue_script( 'single-episode.js', PLUGIN_DIR_URL . 'src/js/inlines/single-episode.js', array('jquery'), PLUGIN_VERSION );
+        wp_enqueue_script( 'single-episode.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/inlines/single-episode.js', array('jquery'), OPENCAST_PLUGIN_VERSION );
         
         $selectable_css = $this->generate_default_style();
         $selectable_style_name = 'oc-single-episode-selectable-style';
@@ -199,8 +199,8 @@ class SingleEpisode extends ShortcodeController
 
     private function render_single_episode(){
         
-        wp_enqueue_script( 'sweetalert2', PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
-        wp_enqueue_script( 'single-episode.js', PLUGIN_DIR_URL . 'src/js/inlines/single-episode.js', array('jquery', 'sweetalert2'), PLUGIN_VERSION );
+        wp_enqueue_script( 'sweetalert2', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/sweetalert2/sweetalert2.js', array('jquery'), '9.15.2' );
+        wp_enqueue_script( 'single-episode.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/inlines/single-episode.js', array('jquery', 'sweetalert2'), OPENCAST_PLUGIN_VERSION );
 
         $default_css = "div.oc-player-container iframe.oc-player{width:95%;height:455px}";
         $defaul_style_name = 'oc-single-episode-style';
@@ -210,7 +210,7 @@ class SingleEpisode extends ShortcodeController
         $opencast_options = $this->opencast_options;
         $endpoint = ((isset($opencast_options['episodeendpoiturl']) && !empty($opencast_options['episodeendpoiturl'])) ? $opencast_options['episodeendpoiturl'] : $opencast_options['apiurl']);
         $src = esc_attr(rtrim($endpoint, '/') . '/paella/ui/embed.html?id=' . $this->oc_id);
-        $safarihelper = esc_attr(PLUGIN_DIR_URL . 'safariHelper.php');
+        $safarihelper = esc_attr(OPENCAST_PLUGIN_DIR_URL . 'safariHelper.php');
         if ($this->usepermissions) {
             $consumerkey = (isset($opencast_options['consumerkey']) ? $opencast_options['consumerkey'] : '');
             $consumersecret = (isset($opencast_options['consumersecret']) ? $opencast_options['consumersecret'] : '');
@@ -220,7 +220,7 @@ class SingleEpisode extends ShortcodeController
             
             $endpoint_lti = rtrim($endpoint, '/') . '/lti';
             $customtools = 'ltitools';
-            $single_episode_container .= LTIConsumer::lti_launch($endpoint_lti, $consumerkey, $consumersecret, $customtools, false);
+            $single_episode_container .= OCLTIConsumer::lti_launch($endpoint_lti, $consumerkey, $consumersecret, $customtools, false);
             
             $single_episode_container .= "<iframe data-playersrc='$src' data-safarihelper='$safarihelper' src='' class='oc-player' allowfullscreen='true'></iframe>";
         } else {
@@ -293,7 +293,7 @@ class SingleEpisode extends ShortcodeController
     }
 
     private function generate_default_style() {
-        return file_get_contents(PLUGIN_DIR . 'src/css/inlines/single-episode.css');
+        return file_get_contents(OPENCAST_PLUGIN_DIR . 'src/css/inlines/single-episode.css');
     }
 }
 

@@ -10,12 +10,12 @@ use Opencast\Api\OAuth\OAuthConsumer;
 use Opencast\Api\OAuth\OAuthRequest;
 use Opencast\Api\OAuth\OAuthSignatureMethod_HMAC_SHA1;
 
-define('INSTRUCTOR_ROLE', 'Instructor');
-define('INSTRUCTOR_USERID', '1');
-define('LEARNER_ROLE', 'Learner');
-define('LEARNER_USERID', '2');
+define('OPENCAST_INSTRUCTOR_ROLE', 'Instructor');
+define('OPENCAST_INSTRUCTOR_USERID', '1');
+define('OPENCAST_LEARNER_ROLE', 'Learner');
+define('OPENCAST_LEARNER_USERID', '2');
 
-class LTIConsumer
+class OCLTIConsumer
 {
     public static function lti_launch($endpoint, $consumerkey, $consumersecret, $customtools,  $auto_submit = false, $extra_roles = array()) {
         $launch_url = html_entity_decode( urldecode( $endpoint ) );
@@ -84,11 +84,11 @@ class LTIConsumer
         $launch_data = array();
         $instructors = ((isset($opencast_options['ltiinstructors'])) ? $opencast_options['ltiinstructors'] : array("administrator"));
         if (array_intersect($user_roles, $instructors)) {
-            $launch_data['roles'] = INSTRUCTOR_ROLE;
-            $launch_data['user_id'] = INSTRUCTOR_USERID;
+            $launch_data['roles'] = OPENCAST_INSTRUCTOR_ROLE;
+            $launch_data['user_id'] = OPENCAST_INSTRUCTOR_USERID;
         } else {
-            $launch_data['roles'] = LEARNER_ROLE;
-            $launch_data['user_id'] = LEARNER_USERID;
+            $launch_data['roles'] = OPENCAST_LEARNER_ROLE;
+            $launch_data['user_id'] = OPENCAST_LEARNER_USERID;
         }
         if (!empty($extra_roles)) {
             $launch_data['roles'] = $launch_data['roles'] . ',' . implode(',', $extra_roles);
@@ -98,8 +98,8 @@ class LTIConsumer
 
     public static function get_lti_roles() {
         return array(
-            'ROLE_USER_LTI_Instructor' => home_url() . "_" . INSTRUCTOR_ROLE,
-            'ROLE_USER_LTI_Learner' => home_url() . "_" . LEARNER_ROLE,
+            'ROLE_USER_LTI_Instructor' => home_url() . "_" . OPENCAST_INSTRUCTOR_ROLE,
+            'ROLE_USER_LTI_Learner' => home_url() . "_" . OPENCAST_LEARNER_ROLE,
         );
     }
 
