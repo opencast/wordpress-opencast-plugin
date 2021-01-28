@@ -71,6 +71,6 @@ register_activation_hook(__FILE__, 'plugin_activate');
 register_deactivation_hook(__FILE__, 'plugin_deactivate');
 
 //Initialize the plugin
-if (class_exists('Opencast\\Init')) {
-    Opencast\Init::register_services();
+if (class_exists('Opencast\\OCInit')) {
+    Opencast\OCInit::register_opencast_services();
 }

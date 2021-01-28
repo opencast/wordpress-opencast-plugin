@@ -5,7 +5,7 @@
 
 namespace Opencast;
 
-final class Init
+final class OCInit
 {
     /**
      * Store all the classes inside and array
@@ -32,7 +32,7 @@ final class Init
      * Loop through the classes and try to register the class
      * @return
      */
-    public static function register_services()
+    public static function register_opencast_services()
     {
         foreach (self::get_services() as $class) {
             $service = new $class();

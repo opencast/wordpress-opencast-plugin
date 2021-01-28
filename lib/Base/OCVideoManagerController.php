@@ -57,8 +57,7 @@ class OCVideoManagerController
             urlencode("is_part_of:$series_id"),
         );
 
-        //default php sanitization (no proper sanitize_* method found)
-        $oc_search = isset($_GET['oc_search']) ? filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING) : '';
+        $oc_search = (!empty($_GET['oc_search']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $_GET['oc_search']))) : '');
         if ($oc_search) {
             $dt = \DateTime::createFromFormat(get_option('date_format') . ' ' . get_option('time_format'), $oc_search);
             if ($dt) {
