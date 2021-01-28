@@ -43,12 +43,12 @@ class OCUploadVideo extends OCShortcodeController
         }
 
         //Attributes via shortcode definition
-        $text = sanitize_text_field((isset($attr['text']) && !empty($attr['text'])) ? __($attr['text']) : __('Drop your video file here'));
-        $btn_text = sanitize_text_field((isset($attr['btn_text']) && !empty($attr['btn_text'])) ? __($attr['btn_text']) : __('Upload Video To Opencast'));
-        $class = sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ?  __($attr['class']) : '');
-        $type = sanitize_text_field(((isset($attr['type']) && !empty($attr['type'])) && (strtolower($attr['type']) == 'presenter' || strtolower($attr['type']) == 'presentation')) ? strtolower($attr['type']) : 'presenter');
-        $success_text = sanitize_text_field((isset($attr['success_text']) && !empty($attr['success_text'])) ? $attr['success_text'] : __('Uploaded'));
-        $fail_text = sanitize_text_field((isset($attr['fail_text']) && !empty($attr['fail_text'])) ? $attr['fail_text'] : __('Failed'));
+        $text = (!empty($attr['text']) ?  __(implode(' ', array_map('sanitize_text_field', explode(' ', $attr['text'])))) : __('Drop your video file here'));
+        $btn_text = (!empty($attr['btn_text']) ?  __(implode(' ', array_map('sanitize_text_field', explode(' ', $attr['btn_text'])))) : __('Upload Video To Opencast'));
+        $class = (!empty($attr['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $attr['class']))) : '');
+        $type = sanitize_key(((isset($attr['type']) && !empty($attr['type'])) && (strtolower($attr['type']) == 'presenter' || strtolower($attr['type']) == 'presentation')) ? strtolower($attr['type']) : 'presenter');
+        $success_text = (!empty($attr['success_text']) ?  __(implode(' ', array_map('sanitize_text_field', explode(' ', $attr['success_text'])))) : __('Uploaded'));
+        $fail_text = (!empty($attr['fail_text']) ?  __(implode(' ', array_map('sanitize_text_field', explode(' ', $attr['fail_text'])))) : __('Failed'));
         
         wp_enqueue_script( 'dropzone', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/dropzone/dist/dropzone.js', array('jquery'), '5.7.0' );
         wp_enqueue_script( 'upload-video.js', OPENCAST_PLUGIN_DIR_URL . 'src/js/inlines/upload-video.js', array('jquery', 'dropzone'), OPENCAST_PLUGIN_VERSION );

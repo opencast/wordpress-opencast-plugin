@@ -47,8 +47,8 @@ class OCVideoManagerController
         $series_id = ((isset($opencast_options['episodeseriesid']) && !empty($opencast_options['episodeseriesid'])) ? $opencast_options['episodeseriesid'] : $opencast_options['seriesid']);
 
         $sortable = array(
-            'orderby' => ((isset($_GET['orderby']) && !empty($_GET['orderby'])) ? filter_var($_GET['orderby'], FILTER_SANITIZE_STRING) : 'start_date'),
-            'order' => ((isset($_GET['order']) && !empty($_GET['order'])) ? strtoupper(filter_var($_GET['order'], FILTER_SANITIZE_STRING)) : 'ASC'),
+            'orderby' => ((isset($_GET['orderby']) && !empty($_GET['orderby'])) ? sanitize_key($_GET['orderby']) : 'start_date'),
+            'order' => ((isset($_GET['order']) && !empty($_GET['order'])) ? strtoupper(sanitize_key($_GET['order'])) : 'ASC'),
         );
         $sort_string = "sort={$sortable['orderby']}:{$sortable['order']}";
 
@@ -57,8 +57,9 @@ class OCVideoManagerController
             urlencode("is_part_of:$series_id"),
         );
 
-        if (isset($_GET['oc_search']) && !empty(filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING))) {
-            $oc_search = filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING);
+        //default php sanitization (no proper sanitize_* method found)
+        $oc_search = isset($_GET['oc_search']) ? filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING) : '';
+        if ($oc_search) {
             $dt = \DateTime::createFromFormat(get_option('date_format') . ' ' . get_option('time_format'), $oc_search);
             if ($dt) {
                 $ts = $dt->getTimestamp();  
@@ -143,7 +144,7 @@ class OCVideoManagerController
     {
         $opencast_options = get_option(OPENCAST_OPTIONS);
         $user = wp_get_current_user();
-        $video_per_page = filter_var($_POST['oc_table_limit'], FILTER_SANITIZE_NUMBER_INT);
+        $video_per_page = sanitize_key(absint($_POST['oc_table_limit']));
         if (!$video_per_page) {
             $video_per_page = 10;
         }
@@ -166,10 +167,11 @@ class OCVideoManagerController
             $request->setUrl($endpoint);
         }
         $deleted_vidoes = array();
-        $videos_to_delete = $_POST['videos'];
+        $videos_to_delete = isset( $_POST['videos'] ) ? (array) $_POST['videos'] : array();
+        //sanitizing array
+        $videos_to_delete = array_map( 'sanitize_key', $videos_to_delete );
         if (is_array($videos_to_delete) && !empty($videos_to_delete)) {
             foreach ($videos_to_delete as $video_id) {
-                $video_id = filter_var($video_id, FILTER_SANITIZE_STRING);
                 if ($video_id) {
                     if ($delete = $request->oc_delete("/api/events/$video_id")) {
                         $deleted_vidoes[] = $video_id;

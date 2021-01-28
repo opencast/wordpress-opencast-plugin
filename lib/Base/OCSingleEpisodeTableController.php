@@ -143,7 +143,7 @@ class OCSingleEpisodeTableController
     {
         $user = wp_get_current_user();
         $opencast_options = get_option(OPENCAST_OPTIONS);
-        $se_per_page = filter_var($_POST['oc_se_table_limit'], FILTER_SANITIZE_NUMBER_INT);
+        $se_per_page = sanitize_key(absint($_POST['oc_se_table_limit']));
         if (!$se_per_page) {
             $se_per_page = 10;
         }
@@ -164,11 +164,12 @@ class OCSingleEpisodeTableController
         $opencast_options['activetabpane'][$user->ID] = $this->activetabpane;
         $response = array();
         $se_list = ((isset($opencast_options['singleepisodelist'])) ? $opencast_options['singleepisodelist'] : array());
-        $single_episodes_to_delete = $_POST['se_ids'];
+        $single_episodes_to_delete = isset( $_POST['se_ids'] ) ? (array) $_POST['se_ids'] : array();
+        //sanitizing array
+        $single_episodes_to_delete = array_map( 'sanitize_key', $single_episodes_to_delete );
         $deleted_ses = array();
         if (!empty($se_list)) {
             foreach ($single_episodes_to_delete as $key) {
-                $se_id = filter_var($key, FILTER_SANITIZE_STRING);
                 if (array_key_exists($se_id, $se_list)) {
                     unset($se_list[$se_id]);
                     $deleted_ses[] = $se_id;
@@ -199,19 +200,15 @@ class OCSingleEpisodeTableController
         $opencast_options['activetabpane'][$user->ID] = $this->activetabpane;
         $response = array();
         $se_list = ((isset($opencast_options['singleepisodelist'])) ? $opencast_options['singleepisodelist'] : array());
-        $single_episode_id = filter_var($_POST['se_id'], FILTER_SANITIZE_STRING);
+        $single_episode_id = sanitize_key($_POST['se_id']);
         if ($se_list && isset($se_list[$single_episode_id])) {
-            $oc_id = filter_var($_POST['oc_id'], FILTER_SANITIZE_STRING);
-            $class = filter_var($_POST['class'], FILTER_SANITIZE_STRING);
-            $usepermissions = filter_var($_POST['usepermissions'], FILTER_SANITIZE_STRING);
+            $oc_id = sanitize_key($_POST['oc_id']);
+            $class = (!empty($_POST['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $_POST['class']))) : '');
+            $usepermissions = sanitize_key($_POST['usepermissions']);
             $usepermissions = (($usepermissions == "true") ? true : false);
-            $permissions = array();
-            if ($usepermissions && is_array($_POST['permissions'])) {
-                foreach ($_POST['permissions'] as $permission) {
-                    $permission = filter_var($permission, FILTER_SANITIZE_STRING);
-                    $permissions[] = $permission;
-                }
-            }
+            $permissions = isset( $_POST['permissions'] ) ? (array) $_POST['permissions'] : array();
+            //sanitizing array
+            $permissions = array_map( 'sanitize_key', $permissions );
             $se_list[$single_episode_id]['oc_id'] = $oc_id;
             $se_list[$single_episode_id]['class'] = $class;
             $se_list[$single_episode_id]['usepermissions'] = $usepermissions;

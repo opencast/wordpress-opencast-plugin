@@ -72,8 +72,8 @@ class OCSingleEpisode extends OCShortcodeController
         $user_roles = ( array ) $user->roles;
 
         //Shortcode Attributes
-        $this->wp_id = sanitize_text_field((isset($attr['wp_id']) && !empty($attr['wp_id'])) ? $attr['wp_id'] : '');
-        $this->class = sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ? $attr['class'] : '');
+        $this->wp_id = sanitize_key((isset($attr['wp_id']) && !empty($attr['wp_id'])) ? $attr['wp_id'] : '');
+        $this->class = (!empty($attr['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $attr['class']))) : '');
 
         $single_episode_list = $this->single_episode_list;
 
@@ -86,8 +86,8 @@ class OCSingleEpisode extends OCShortcodeController
             $this->oc_id = $episode_data['oc_id'];
             $this->usepermissions = $episode_data['usepermissions'];
             $this->permissions  = $episode_data['permissions'];
-            if (isset($_GET['oc_id']) && isset($_GET['wp_id']) && $this->wp_id == sanitize_text_field($_GET['wp_id'])) {
-                $this->oc_id = sanitize_text_field($_GET['oc_id']);
+            if (isset($_GET['oc_id']) && isset($_GET['wp_id']) && $this->wp_id == sanitize_key($_GET['wp_id'])) {
+                $this->oc_id = sanitize_key($_GET['oc_id']);
                 $this->usepermissions = true;
                 $this->permissions = array_unique(array_merge($user_roles, $this->permissions));
                 $this->store_single_episode_options();
@@ -114,7 +114,8 @@ class OCSingleEpisode extends OCShortcodeController
         );
 
         $opencast_options['singleepisodelist'] = $single_episode_list;
-        if (!(isset($_POST['action']) && $_POST['action'] == 'elementor_ajax')) { 
+        $action = sanitize_key((isset($_POST['action']) ? $_POST['action'] : ''));
+        if ($action != 'elementor_ajax') { 
             update_option( OPENCAST_OPTIONS, $opencast_options );
         }
     }

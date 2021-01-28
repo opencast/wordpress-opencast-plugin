@@ -127,10 +127,7 @@ class OCVideoListTable extends \WP_List_Table
     }
 
     function search_box($name, $id) {
-        $oc_search = '';
-        if (isset($_GET['oc_search']) && !empty(filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING))) {
-            $oc_search = filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING);
-        }
+        isset($_GET['oc_search']) ? filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING) : '';
         $searchbox = '<p class="search-box">';
         $searchbox .= "<label class='screen-reader-text' for='" . esc_attr($id) ."-search-input'>" . esc_html(__($name)) . "</label>";
         $searchbox .= "<input id='" . esc_attr($id) ."-search-input' type='text' name='oc-table-search' value='" . esc_attr($oc_search) . "' />";

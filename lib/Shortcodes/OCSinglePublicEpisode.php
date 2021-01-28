@@ -21,8 +21,8 @@ class OCSinglePublicEpisode extends OCShortcodeController
 
     public function generate_opencast_single_episode_public($attr)
     {
-        $class = sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ? $attr['class'] : '');
-        $oc_id = sanitize_text_field((isset($attr['oc_id']) && !empty($attr['oc_id'])) ? $attr['oc_id'] : '');
+        $class = (!empty($attr['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $attr['class']))) : '');
+        $oc_id = sanitize_key((isset($attr['oc_id']) && !empty($attr['oc_id'])) ? $attr['oc_id'] : '');
         if ($oc_id) {
 
             $default_css = "div.oc-player-container iframe.oc-player{width:95%;height:455px}";

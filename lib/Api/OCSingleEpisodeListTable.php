@@ -82,12 +82,9 @@ class OCSingleEpisodeListTable extends \WP_List_Table
     }
 
     /* function search_box($name, $id) {
-        $oc_search = '';
-        if (isset($_GET['oc_search']) && !empty(filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING))) {
-            $oc_search = filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING);
-        }
+        $oc_search = (isset($_GET['oc_search']) ? filter_var(urldecode($_GET['oc_search']), FILTER_SANITIZE_STRING) : '');
         $searchbox = '<p class="search-box">';
-        $searchbox .= "<label class='screen-reader-text' for='$id-search-input'>" . __($name) . "</label>";
+        $searchbox .= "<label class='screen-reader-text' for='$id-search-input'>" . esc_html(__($name)) . "</label>";
         $searchbox .= "<input id='$id-search-input' type='text' name='oc-table-search' value='$oc_search' />";
         $searchbox .= "<input id='search-submit' class='button' type='submit' name='s' value='" . __('Search') . "' />";
         if ($oc_search) {

@@ -40,8 +40,9 @@ class OCStudio extends OCShortcodeController
         }
         
         $studio = '';
-        $title = sanitize_text_field((isset($attr['title']) && !empty($attr['title'])) ? __($attr['title']) : '');
-        $class = sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ?  __($attr['class']) : '');
+        $title = (!empty($attr['title']) ?  __(implode(' ', array_map('sanitize_text_field', explode(' ', $attr['title'])))) : '');
+        $class = (!empty($attr['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $attr['class']))) : '');
+        //No sanitization needed.
         if (!isset($_GET['redirect_to_studio'])) {
             $studio_style = '';
             if (!$class) {

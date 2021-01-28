@@ -25,10 +25,11 @@ class OCEpisodes extends OCShortcodeController
     {
         $opencast_options = get_option(OPENCAST_OPTIONS);
         if (is_array($episodes = $this->get_episodes($opencast_options))) {
+            $classes = (!empty($attr['class']) ?  implode(' ', array_map('sanitize_text_field', explode(' ', $attr['class']))) : 'opencast-episodes-container');
             $attributes = array(
-                'id' => sanitize_text_field((isset($attr['id']) && !empty($attr['id'])) ? $attr['id'] : 'oc-episodes'),
-                'name' => sanitize_text_field((isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : 'oc-episodes'),
-                'class' => sanitize_text_field((isset($attr['class']) && !empty($attr['class'])) ? $attr['class'] : 'opencast-episodes-container')
+                'id' => sanitize_key((isset($attr['id']) && !empty($attr['id'])) ? $attr['id'] : 'oc-episodes'),
+                'name' => sanitize_key((isset($attr['name']) && !empty($attr['name'])) ? $attr['name'] : 'oc-episodes'),
+                'class' => $classes
             );
             if (isset($episodes['list']) && $episodes['list']) {
                 $rendered_episodes = '';
@@ -73,7 +74,7 @@ class OCEpisodes extends OCShortcodeController
         }
 
         $limit = (isset($opencast_options['episodepagelimit']) && !empty(trim($opencast_options['episodepagelimit']))) ? $opencast_options['episodepagelimit'] : 0;
-        $sort = (isset($_GET['oc_episode_sort'])) ? $_GET['oc_episode_sort'] : '';
+        $sort = (isset($_GET['oc_episode_sort'])) ? sanitize_key($_GET['oc_episode_sort']) : '';
         
         $request = new OCRestAPI();
         $series_id = ((isset($opencast_options['episodeseriesid']) && !empty($opencast_options['episodeseriesid'])) ? $opencast_options['episodeseriesid'] : $opencast_options['seriesid']);
