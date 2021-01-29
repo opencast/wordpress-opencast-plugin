@@ -21,16 +21,16 @@ class OCRestAPI {
         $this->apitimeout = ((isset($opencast_options['apitimeout']) && !empty(isset($opencast_options['apitimeout']))) ? $opencast_options['apitimeout'] : 1);
     }
 
-    public function setUrl($endpoint) {
+    public function opencast_set_url($endpoint) {
         $this->apiurl = $endpoint;
     }
 
-    public function oc_get($service_url) {
+    public function opencast_get($service_url) {
         $args['method'] = 'GET';
         return $this->remote_request($service_url, $args);
     }
 
-    public function oc_post($service_url, $form_fields) {
+    public function opencast_post($service_url, $form_fields) {
         $args['method'] = 'POST';
         if (!empty($form_fields)) {
             $args['body'] = $form_fields;
@@ -38,7 +38,7 @@ class OCRestAPI {
         return $this->remote_request($service_url, $args, 'multipart/form-data');
     }
 
-    public function oc_put($service_url, $form_fields) {
+    public function opencast_put($service_url, $form_fields) {
         
         $args['method'] = 'PUT';
         if (!empty($form_fields)) {
@@ -47,7 +47,7 @@ class OCRestAPI {
         return $this->remote_request($service_url, $args, 'multipart/form-data');
     }
 
-    public function oc_delete($service_url, $data = array()) {
+    public function opencast_delete($service_url, $data = array()) {
         $args['method'] = 'DELETE';
         return $this->remote_request($service_url, $args);
     }
@@ -69,7 +69,7 @@ class OCRestAPI {
             $url = rtrim($service_url[0], '/') . '/'. ltrim($service_url[1], '/');
         }
         
-        $args = $this->prepareArgs($args, $content_type);
+        $args = $this->prepare_args($args, $content_type);
 
         $res = wp_remote_request($url, $args);
 
@@ -97,7 +97,7 @@ class OCRestAPI {
                 (isset($args['method']) && (in_array($args['method'], array('GET', 'POST', 'PUT', 'DELETE')))));
     }
 
-    private function prepareArgs($args, $content_type)
+    private function prepare_args($args, $content_type)
     {
         $header = array();
         $basicauth = base64_encode("{$this->apiusername}:{$this->apipassword}");

@@ -7,7 +7,7 @@ namespace Opencast\Shortcodes;
 
 class OCShortcodeController
 {
-    public function oc_add_inline_style($style_name, $style_content) {
+    public function opencast_add_inline_style($style_name, $style_content) {
         if (empty($style_name) || empty($style_content)) {
             return;
         }

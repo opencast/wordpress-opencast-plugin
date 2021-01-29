@@ -38,7 +38,7 @@ class OCEpisodes extends OCShortcodeController
                 if ($limit && $limit < $total) {
                     $pagination_css = $this->generate_default_style_pagination();
                     $pagination_style_name = 'oc-pagination-style';
-                    $this->oc_add_inline_style($pagination_style_name, $pagination_css);
+                    $this->opencast_add_inline_style($pagination_style_name, $pagination_css);
                 }
 
                 wp_enqueue_script( 'paginationjs', OPENCAST_PLUGIN_DIR_URL . 'src/vendors/pagination/pagination.js', array('jquery'), '2.1.5' );
@@ -80,10 +80,10 @@ class OCEpisodes extends OCShortcodeController
         $series_id = ((isset($opencast_options['episodeseriesid']) && !empty($opencast_options['episodeseriesid'])) ? $opencast_options['episodeseriesid'] : $opencast_options['seriesid']);
         $endpoint = ((isset($opencast_options['episodeendpoiturl']) && !empty($opencast_options['episodeendpoiturl'])) ? $opencast_options['episodeendpoiturl'] : $opencast_options['apiurl']);
         if ($endpoint) {
-            $request->setUrl($endpoint);
+            $request->opencast_set_url($endpoint);
         }
         
-        if ($search_result = $request->oc_get("/search/episode.json?sid=$series_id&sort=$sort")) {
+        if ($search_result = $request->opencast_get("/search/episode.json?sid=$series_id&sort=$sort")) {
             $episodes_list = array();
             if (!isset($search_result['search-results']['result'])) {
                 return array();
@@ -108,7 +108,7 @@ class OCEpisodes extends OCShortcodeController
         if (isset($attributes['class']) && strpos($attributes['class'], 'opencast-episodes-container') !== FALSE) {
             $default_css = $this->generate_default_style_episodes();
             $default_style_name = 'oc-episodes-style';
-            $this->oc_add_inline_style($default_style_name, $default_css);
+            $this->opencast_add_inline_style($default_style_name, $default_css);
         }
 
         $total = $episodes['total'];

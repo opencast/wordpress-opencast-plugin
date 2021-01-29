@@ -48,7 +48,7 @@ class OCAdmin
                 'menu_title' => 'Opencast',
                 'capability' => 'manage_options',
                 'menu_slug' => OPENCAST_OPTIONS,
-                'callback' => [$this->callbacks, 'oc_admin_index'],
+                'callback' => [$this->callbacks, 'opencast_admin_index'],
                 'icon_url' => 'dashicons-opencast',
                 'position' => 110,
             ]
@@ -68,7 +68,7 @@ class OCAdmin
                 'menu_title' => __('Video Manager'),
                 'capability' => 'manage_options',
                 'menu_slug' => OPENCAST_VIDEOS_MANAGER,
-                'callback' => [new OCVideoManagerController(), 'oc_admin_video_manager_index'],
+                'callback' => [new OCVideoManagerController(), 'opencast_admin_video_manager_index'],
             ]
         ];
     }
@@ -99,31 +99,31 @@ class OCAdmin
             [
                 'id' => 'opencast_api_option_section', 
                 'title' => __('API Settings'), 
-                'callback' => [$this->callbacks, 'oc_api_option_section'], 
+                'callback' => [$this->callbacks, 'opencast_api_option_section'], 
                 'page' => OPENCAST_OPTIONS,
             ],
             [
                 'id' => 'opencast_video_option_section', 
                 'title' => __('Upload Video Settings'), 
-                'callback' => [$this->callbacks, 'oc_video_option_section'], 
+                'callback' => [$this->callbacks, 'opencast_video_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_studio_option_section', 
                 'title' => __('Studio Settings'), 
-                'callback' => [$this->callbacks, 'oc_studio_option_section'], 
+                'callback' => [$this->callbacks, 'opencast_studio_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_episode_option_section', 
                 'title' => __('Episodes Settings'), 
-                'callback' => [$this->callbacks, 'oc_episode_option_section'], 
+                'callback' => [$this->callbacks, 'opencast_episode_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ],
             [
                 'id' => 'opencast_single_episode_option_section', 
                 'title' => __('Single Episodes Settings'), 
-                'callback' => [$this->callbacks, 'oc_single_episode_option_section'], 
+                'callback' => [$this->callbacks, 'opencast_single_episode_option_section'], 
                 'page' => OPENCAST_OPTIONS
             ]
         ];
@@ -143,7 +143,7 @@ class OCAdmin
                     $field['page'] = OPENCAST_OPTIONS;
                     $field['args']['option_name'] = OPENCAST_OPTIONS;
                     $field['section'] = $section;
-                    $field['callback'] = [$this->callbacks, $this->callbacks->oc_get_callback($field['type'])];
+                    $field['callback'] = [$this->callbacks, $this->callbacks->opencast_get_callback($field['type'])];
                     unset($field['type']);
                     $new_fields[] = $field;
                 }
@@ -258,7 +258,7 @@ class OCAdmin
                         'placeholder' => 'Instructors Roles',
                         'multi' => true,
                         'description' => __('User Roles that have Instructor Permissions'),
-                        'options' => $this->callbacks->oc_get_wp_roles('dropdown'),
+                        'options' => $this->callbacks->opencast_get_wp_roles('dropdown'),
                         'default' => 'administrator'
                     ]
                 ]
@@ -289,7 +289,7 @@ class OCAdmin
                         'placeholder' => 'Access Permissions for Studio',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to Studio features'),
-                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
+                        'options' => $this->callbacks->opencast_get_wp_roles('dropdown')
                     ]
                 ],
             ],
@@ -358,7 +358,7 @@ class OCAdmin
                         'placeholder' => 'Access Permissions for Episodes list',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to List of Videos'),
-                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
+                        'options' => $this->callbacks->opencast_get_wp_roles('dropdown')
                     ]
                 ],
             ],
@@ -388,7 +388,7 @@ class OCAdmin
                         'placeholder' => 'Access Permissions for Episodes list',
                         'multi' => true,
                         'description' => __('Select the roles to grant access to Upload Videos'),
-                        'options' => $this->callbacks->oc_get_wp_roles('dropdown')
+                        'options' => $this->callbacks->opencast_get_wp_roles('dropdown')
                     ]
                 ],
                 [
@@ -400,7 +400,7 @@ class OCAdmin
                         'placeholder' => 'Workflow to start after upload',
                         'multi' => false,
                         'description' => __('Setup the unique shortname of the workflow, that should be started after succesfully uploading a video file to opencast. If left blank the standard workflow (ng-schedule-and-upload) will be used. Ask for additional workflows that may have been created by the opencast administrator.'),
-                        'options' => $this->callbacks->oc_get_existing_workflows('upload', true),
+                        'options' => $this->callbacks->opencast_get_existing_workflows('upload', true),
                         'default' => 'upload'
                     ]
                 ],

@@ -19,7 +19,7 @@ class OCVideoManagerController
         }
     }
 
-    public function oc_admin_video_manager_index() 
+    public function opencast_admin_video_manager_index() 
     {
         $video_per_page = $this->prepare_video_per_page();
         $video_list_table = new OCVideoListTable(
@@ -69,7 +69,7 @@ class OCVideoManagerController
             }
         }
 
-        if ($search_result = $request->oc_get("/api/events?filter=" . implode(',', $filters) . "&$sort_string")) {
+        if ($search_result = $request->opencast_get("/api/events?filter=" . implode(',', $filters) . "&$sort_string")) {
             //adding actions
             foreach ( $search_result as $video_obj ) {
                 //actions 
@@ -139,7 +139,7 @@ class OCVideoManagerController
         return $video_per_page;
     }
 
-    public function save_limit_ajax() 
+    public function opencast_video_save_limit_ajax() 
     {
         $opencast_options = get_option(OPENCAST_OPTIONS);
         $user = wp_get_current_user();
@@ -156,14 +156,14 @@ class OCVideoManagerController
         wp_die();
     }
 
-    public function delete_videos_ajax() 
+    public function opencast_video_delete_ajax() 
     {
         $opencast_options = get_option(OPENCAST_OPTIONS);
         $response = array();
         $request = new OCRestAPI();
         $endpoint = ((isset($opencast_options['episodeendpoiturl']) && !empty($opencast_options['episodeendpoiturl'])) ? rtrim($opencast_options['episodeendpoiturl'], '/') : '');
         if ($endpoint) {
-            $request->setUrl($endpoint);
+            $request->opencast_set_url($endpoint);
         }
         $deleted_vidoes = array();
         $videos_to_delete = isset( $_POST['videos'] ) ? (array) $_POST['videos'] : array();
@@ -172,7 +172,7 @@ class OCVideoManagerController
         if (is_array($videos_to_delete) && !empty($videos_to_delete)) {
             foreach ($videos_to_delete as $video_id) {
                 if ($video_id) {
-                    if ($delete = $request->oc_delete("/api/events/$video_id")) {
+                    if ($delete = $request->opencast_delete("/api/events/$video_id")) {
                         $deleted_vidoes[] = $video_id;
                     }
                 }

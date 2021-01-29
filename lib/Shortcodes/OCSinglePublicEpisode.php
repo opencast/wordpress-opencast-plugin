@@ -27,7 +27,7 @@ class OCSinglePublicEpisode extends OCShortcodeController
 
             $default_css = "div.oc-player-container iframe.oc-player{width:95%;height:455px}";
             $defaul_style_name = 'oc-single-episode-public-style';
-            $this->oc_add_inline_style($defaul_style_name, $default_css);
+            $this->opencast_add_inline_style($defaul_style_name, $default_css);
 
             $single_episode_container = "";
             $single_episode_container .= "<div class='oc-player-container " . esc_attr($class) . "'>";

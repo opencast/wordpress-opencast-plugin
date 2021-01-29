@@ -8,32 +8,32 @@ use Opencast\Api\OCRestAPI;
 
 class OCAdminCallbacks
 {
-    public function oc_admin_index()
+    public function opencast_admin_index()
     {
-        return require_once( OPENCAST_PLUGIN_DIR . 'views/admin/oc_admin_index.php' );
+        return require_once( OPENCAST_PLUGIN_DIR . 'views/admin/opencast_admin_index.php' );
     }
     
-    public function oc_api_option_section()
+    public function opencast_api_option_section()
     {
         echo '<p>' . __('Opencast API connection') . '</p>';
     }
 
-    public function oc_studio_option_section()
+    public function opencast_studio_option_section()
     {
         echo '<p>' . __('Opencast studio integration') . '</p>';
     }
 
-    public function oc_episode_option_section()
+    public function opencast_episode_option_section()
     {
         echo '<p>' . __('Display Opencast Episodes') . '</p>';
     }
     
-    public function oc_single_episode_option_section()
+    public function opencast_single_episode_option_section()
     {
         echo '<p>' . __('Manage Single Episodes') . '</p>';
     }
 
-    public function oc_video_option_section()
+    public function opencast_video_option_section()
     {
         echo '<p>' . __('Below are the Upload Video settings for Opencast.') . '</p>';
     }
@@ -76,16 +76,16 @@ class OCAdminCallbacks
     }
 
 
-    public function oc_get_callback($type)
+    public function opencast_get_callback($type)
     {
         foreach (get_class_methods($this) as $method) {
-            if (strtolower($method) == "ocinput{$type}field") {
+            if (strtolower($method) == "opencastinput{$type}field") {
                 return $method;
             }       
         }
     }
 
-    public function ocInputCheckboxField($args)
+    public function opencastInputCheckboxField($args)
     {
         $option = get_option($args['option_name']);
         $value = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : true;
@@ -113,7 +113,7 @@ class OCAdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function ocInputTextField($args)
+    public function opencastInputTextField($args)
     {
         $option = get_option($args['option_name']);
         $value = (isset($option[$args['label_for']])) ? esc_attr($option[$args['label_for']]) : '';
@@ -132,7 +132,7 @@ class OCAdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function ocInputSelectField($args)
+    public function opencastInputSelectField($args)
     {
         $option = get_option($args['option_name']);
         $values = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : '';
@@ -166,20 +166,20 @@ class OCAdminCallbacks
         echo "<div class='input' >" . $input . $input_default . $input_desc . "</div>";
     }
 
-    public function ocInputSingleEpisodeTableField($args)
+    public function opencastInputSingleEpisodeTableField($args)
     {
         $option = get_option($args['option_name']);
         $list = (isset($option[$args['label_for']])) ? $option[$args['label_for']] : array();
         $controller = (isset($args['controller'])) ? $args['controller'] : null;
         $option_name = "{$args['option_name']}[{$args['label_for']}]";
         if ($controller) {
-            $controller->generate_table($list, $this->oc_get_wp_roles(), $option_name);
+            $controller->generate_table($list, $this->opencast_get_wp_roles(), $option_name);
         }
         // echo 'Empty';
     }
 
 
-    public function oc_get_wp_roles($type = '') {
+    public function opencast_get_wp_roles($type = '') {
         $roles = wp_roles();
         $wp_roles = array();
         if (!$roles) {
@@ -202,10 +202,10 @@ class OCAdminCallbacks
         return $wp_roles;
     }
 
-    public function oc_get_existing_workflows($tag = '', $as_options = true) {
+    public function opencast_get_existing_workflows($tag = '', $as_options = true) {
         $existing_workflows = array();
         $request = new OCRestAPI();
-        if ($returnedresults = $request->oc_get("/api/workflow-definitions?filter=tag:$tag")) {
+        if ($returnedresults = $request->opencast_get("/api/workflow-definitions?filter=tag:$tag")) {
            foreach ($returnedresults as $workflow) {
                 $existing_workflows[$workflow['identifier']] = ((array_key_exists('title', $workflow)) ? $workflow['title'] : $workflow['identifier']);
            }

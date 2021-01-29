@@ -132,7 +132,7 @@ class OCSingleEpisode extends OCShortcodeController
         
         $selectable_css = $this->generate_default_style();
         $selectable_style_name = 'oc-single-episode-selectable-style';
-        $this->oc_add_inline_style($selectable_style_name, $selectable_css);
+        $this->opencast_add_inline_style($selectable_style_name, $selectable_css);
 
         $selectable_episodes_list = '';
         
@@ -205,7 +205,7 @@ class OCSingleEpisode extends OCShortcodeController
 
         $default_css = "div.oc-player-container iframe.oc-player{width:95%;height:455px}";
         $defaul_style_name = 'oc-single-episode-style';
-        $this->oc_add_inline_style($defaul_style_name, $default_css);
+        $this->opencast_add_inline_style($defaul_style_name, $default_css);
 
         $single_episode_container = "<div class='oc-player-container " . esc_attr($this->class) . "'>";
         $opencast_options = $this->opencast_options;
@@ -239,9 +239,9 @@ class OCSingleEpisode extends OCShortcodeController
         $series_id = ((isset($opencast_options['episodeseriesid']) && !empty($opencast_options['episodeseriesid'])) ? $opencast_options['episodeseriesid'] : $opencast_options['seriesid']);
         $endpoint = ((isset($opencast_options['episodeendpoiturl']) && !empty($opencast_options['episodeendpoiturl'])) ? $opencast_options['episodeendpoiturl'] : $opencast_options['apiurl']);
         if ($endpoint) {
-            $request->setUrl($endpoint);
+            $request->opencast_set_url($endpoint);
         }
-        if ($search_result = $request->oc_get("/search/episode.json?sid=$series_id")) {
+        if ($search_result = $request->opencast_get("/search/episode.json?sid=$series_id")) {
             $episodes_list = array();
             if (!isset($search_result['search-results']['result'])) {
                 return array();

@@ -69,7 +69,7 @@ class OCUploadVideo extends OCShortcodeController
 
         $upload_css = $this->generate_default_style();
         $upload_style_name = 'oc-upload-style';
-        $this->oc_add_inline_style($upload_style_name, $upload_css);
+        $this->opencast_add_inline_style($upload_style_name, $upload_css);
 
         $upload = "";
         $upload .= "<div class='oc-upload-box " . esc_attr($class) . "'>";

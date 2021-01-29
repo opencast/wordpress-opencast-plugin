@@ -48,7 +48,7 @@ class OCStudio extends OCShortcodeController
             if (!$class) {
                 $studio_css = $this->generate_default_style();
                 $studio_style_name = 'oc-studio-btn-style';
-                $this->oc_add_inline_style($studio_style_name, $studio_css);
+                $this->opencast_add_inline_style($studio_style_name, $studio_css);
                 $studio_style = "style='background-image: url(" . plugins_url('/src/images/studio_small.svg', dirname(__FILE__, 2)) .");'";
                 $class = 'oc-studio-btn';
             }

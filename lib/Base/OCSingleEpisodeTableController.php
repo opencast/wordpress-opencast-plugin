@@ -139,7 +139,7 @@ class OCSingleEpisodeTableController
         return $actions;
     }
 
-    public function save_limit_se_ajax() 
+    public function opencast_save_limit_se_ajax() 
     {
         $user = wp_get_current_user();
         $opencast_options = get_option(OPENCAST_OPTIONS);
@@ -157,7 +157,7 @@ class OCSingleEpisodeTableController
         wp_die();
     }
 
-    public function delete_se_ajax() 
+    public function opencast_delete_se_ajax() 
     {
         $opencast_options = get_option(OPENCAST_OPTIONS);
         $user = wp_get_current_user();
@@ -194,7 +194,7 @@ class OCSingleEpisodeTableController
         wp_die();
     }
 
-    public function update_se_ajax(){
+    public function opencast_update_se_ajax(){
         $opencast_options = get_option(OPENCAST_OPTIONS);
         $user = wp_get_current_user();
         $opencast_options['activetabpane'][$user->ID] = $this->activetabpane;

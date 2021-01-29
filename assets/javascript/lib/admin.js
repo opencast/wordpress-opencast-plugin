@@ -173,7 +173,7 @@ $(function() {
                             method: "POST",
                             async: true,
                             data : {
-                                "action": 'update_se_ajax',
+                                "action": 'opencast_update_se_ajax',
                                 "se_id": id,
                                 "oc_id": oc_id,
                                 "class": cls,
@@ -262,7 +262,7 @@ function deleteSingleEpisode(ajax_url, episode_ids) {
                     method: "POST",
                     async: true,
                     data : {
-                        "action": 'delete_se_ajax',
+                        "action": 'opencast_delete_se_ajax',
                         "se_ids": episode_ids
                     },
                 }).fail(function(err) {

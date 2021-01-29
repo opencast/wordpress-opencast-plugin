@@ -14,7 +14,7 @@ $(function() {
                     url: ajax_url,
                     type : 'POST',
                     data : {
-                        "action"        : 'save_limit_ajax',
+                        "action"        : 'opencast_video_save_limit_ajax',
                         "oc_table_limit": limit_value
                     },
                     success: function( resp ) {
@@ -121,7 +121,7 @@ function deleteVideo(ajax_url, video_ids) {
                     method: "POST",
                     async: true,
                     data : {
-                        "action": 'delete_videos_ajax',
+                        "action": 'opencast_video_delete_ajax',
                         "videos": video_ids
                     },
                 }).fail(function(err) {
