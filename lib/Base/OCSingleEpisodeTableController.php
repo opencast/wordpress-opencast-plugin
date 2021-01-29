@@ -169,7 +169,7 @@ class OCSingleEpisodeTableController
         $single_episodes_to_delete = array_map( 'sanitize_key', $single_episodes_to_delete );
         $deleted_ses = array();
         if (!empty($se_list)) {
-            foreach ($single_episodes_to_delete as $key) {
+            foreach ($single_episodes_to_delete as $se_id) {
                 if (array_key_exists($se_id, $se_list)) {
                     unset($se_list[$se_id]);
                     $deleted_ses[] = $se_id;

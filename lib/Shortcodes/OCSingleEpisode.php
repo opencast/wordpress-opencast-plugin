@@ -86,7 +86,7 @@ class OCSingleEpisode extends OCShortcodeController
             $this->oc_id = $episode_data['oc_id'];
             $this->usepermissions = $episode_data['usepermissions'];
             $this->permissions  = $episode_data['permissions'];
-            if (isset($_GET['oc_id']) && isset($_GET['wp_id']) && $this->wp_id == sanitize_key($_GET['wp_id'])) {
+            if (isset($_GET['oc_id']) && empty(trim($this->oc_id)) && isset($_GET['wp_id']) && $this->wp_id == sanitize_key($_GET['wp_id'])) {
                 $this->oc_id = sanitize_key($_GET['oc_id']);
                 $this->usepermissions = true;
                 $this->permissions = array_unique(array_merge($user_roles, $this->permissions));
