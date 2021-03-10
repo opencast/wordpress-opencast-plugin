@@ -13,9 +13,6 @@ class OCSinglePublicEpisode extends OCShortcodeController
      */
     public function register()
     {
-        if (!get_option(OPENCAST_OPTIONS)) {
-            return;
-        }
         add_shortcode('opencast-episode-single-public', [$this, 'generate_opencast_single_episode_public']);
     }
 
