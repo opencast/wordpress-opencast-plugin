@@ -6,7 +6,7 @@
 Plugin Name: Opencast Plugin
 Plugin URI: https://github.com/opencast/wordpress-opencast-plugin
 Description: Opencast Video Solution for automated video capture, management, and distribution at scale in wordpress.
-Version: 1.0.0
+Version: 1.0.1
 Author: Farbod Zamani Boroujeni
 Author Email: zamani@elan-ev.de
 Author URI: elan-ev.de
