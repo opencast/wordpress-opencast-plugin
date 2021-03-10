@@ -81,6 +81,8 @@ This Shortcode is used to display a single Opencast episode video. It provides a
 It can be used for a single public video which has been made public specifically in Opencast.
 - oc_id: it is a required attribute and must contain the episode id of a public video.
 - class: for custom class name.
+##### Version 1.0.1: [opencast-episode-single-public oc_url="{valid_url}"] 
+ - oc_url: it is the valid video Player-URL, in case the URL is set, oc_id is no more required and has no effect! 
 #### [ opencast-studio-button title='' class='' ]
 This Shortcode makes a link button which redirects users to Opencast Studio. It accepts 2 Attributes:
 - title: this attribute will replace the text of the link button.
@@ -94,6 +96,11 @@ By using this Shortcode, users can upload their videos via a Upload Box which ge
 - fail_text: a text message displayed when the upload is unsuccessful, by default "Failed"
 - class: used to apply custom class on the upload box.
 
+## Change Log
+### Version 1.0.1
+Enhancement: possibily to enter an opencast public video url as an attribute to the public single video shortcode:
+[opencast-episode-single-public oc_url="{valid_url}"] 
+in this case admin are able to show a public video only with its player-url
 
 #### Important to know:
 Except [ opencast-episode-single-public ] Shortcode, others will apply the Access Permissions if it is enabled. The users who do not get the permission to access will see nothing.

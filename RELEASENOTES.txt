@@ -1,0 +1,3 @@
+- 1.0.1
+Enhancement: possibily to enter an opencast public video url as an attribute to the public single video shortcode:
+[opencast-episode-single-public oc_url="{valid_url}"]
